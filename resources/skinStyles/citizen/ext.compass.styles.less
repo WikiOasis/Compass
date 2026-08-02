@@ -1,0 +1,17 @@
+@import 'panels.less';
+
+// The class is on the body, so this also beats the module's own styles no
+// matter which order ResourceLoader concatenates them in.
+.skin-citizen {
+	.ext-compass-highlight {
+		.ext-compass-citizen-panel();
+
+		.ext-compass-actions {
+			.ext-compass-citizen-panel-footer();
+		}
+	}
+
+	.ext-compass-thumbnail {
+		border-radius: @ext-compass-citizen-radius;
+	}
+}

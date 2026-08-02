@@ -203,6 +203,12 @@
 			]
 		}
 	},
+	"ResourceModuleSkinStyles": {
+		"citizen": {
+			"+ext.compass.app": "skinStyles/citizen/ext.compass.app.less",
+			"+ext.compass.styles": "skinStyles/citizen/ext.compass.styles.less"
+		}
+	},
 	"Hooks": {
 		"CreateWikiDeletion": {
 			"handler": "CreateWiki"

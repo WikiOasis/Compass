@@ -1,0 +1,27 @@
+@import 'panels.less';
+
+// The class is on the body, so this also beats the single-file component styles
+// no matter which order ResourceLoader concatenates them in.
+.skin-citizen {
+	.ext-compass-highlight {
+		.ext-compass-citizen-panel();
+
+		&__actions {
+			.ext-compass-citizen-panel-footer();
+		}
+
+		&__card.cdx-card .cdx-card__thumbnail.cdx-thumbnail {
+			.cdx-thumbnail__image,
+			.cdx-thumbnail__placeholder {
+				border-radius: @ext-compass-citizen-radius;
+			}
+		}
+	}
+
+	.ext-compass-app__thumbnail {
+		.cdx-thumbnail__image,
+		.cdx-thumbnail__placeholder {
+			border-radius: @ext-compass-citizen-radius;
+		}
+	}
+}

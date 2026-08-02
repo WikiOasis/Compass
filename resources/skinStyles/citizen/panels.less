@@ -1,0 +1,23 @@
+@import 'mediawiki.skin.variables.less';
+
+// Citizen overrides the Codex design tokens itself, so the Codex components in
+// Compass follow the skin's colours, radii and theme modes without any help.
+// What it cannot reach is the chrome Compass draws around them: the highlight
+// panel and its action bar are plain markup of our own, styled from the Codex
+// defaults. These mixins put that markup back on Citizen's surface hierarchy.
+
+// Citizen's radius scale is a step softer than Codex'. Fall back to the Codex
+// token so this stays valid if the skin ever drops the alias.
+@ext-compass-citizen-radius: var( --border-radius-medium, @border-radius-base );
+
+// The card surface. Unlike the Codex tint it tracks every Citizen theme mode,
+// including pure black, where a tint on its own reads as a flat rectangle.
+.ext-compass-citizen-panel() {
+	border-radius: @ext-compass-citizen-radius;
+	background-color: var( --color-surface-1, @background-color-progressive-subtle );
+}
+
+// Raised elements within a card sit one surface higher.
+.ext-compass-citizen-panel-footer() {
+	background-color: var( --color-surface-2, transparent );
+}
