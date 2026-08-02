@@ -76,6 +76,7 @@ class ApiQueryCompassDirectory extends ApiQueryBase {
 			'createdformatted' => $this->getLanguage()->userDate(
 				$row->wiki_creation, $this->getUser()
 			),
+			'thumbnail' => (string)( $row->cpw_thumbnail ?? '' ),
 			'description' => (string)( $row->cpw_description ?? '' ),
 			'extendeddescription' => (string)( $row->cpw_extended_description ?? '' ),
 		];

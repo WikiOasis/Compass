@@ -25,18 +25,32 @@
 }
 
 .ext-compass-filters {
+	margin-bottom: @spacing-100;
+
 	&__grid {
-		display: grid;
-		grid-template-columns: repeat( auto-fit, minmax( 12em, 1fr ) );
-		gap: @spacing-100;
-		align-items: end;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: @spacing-50;
+	}
+
+	.cdx-field {
+		margin: 0;
+		min-width: 9em;
+		font-size: @font-size-small;
+	}
+
+	.cdx-label__label__text {
+		font-size: @font-size-x-small;
+		font-weight: @font-weight-normal;
+		color: @color-subtle;
 	}
 
 	&__actions {
 		display: flex;
 		flex-wrap: wrap;
 		gap: @spacing-50;
-		margin-top: @spacing-100;
+		margin-top: @spacing-75;
 	}
 
 	.cdx-select,
@@ -47,15 +61,31 @@
 
 .ext-compass-cards {
 	display: grid;
-	grid-template-columns: repeat( auto-fill, minmax( 18em, 1fr ) );
+	grid-template-columns: repeat( auto-fill, minmax( 22em, 1fr ) );
 	gap: @spacing-100;
 	align-items: stretch;
 }
 
 .ext-compass-highlight {
 	height: 100%;
+	padding: @spacing-150;
+	gap: @spacing-100;
 	border-color: @border-color-progressive;
 	background-color: @background-color-progressive-subtle;
+
+	.cdx-card__text__title {
+		font-size: @font-size-large;
+	}
+
+	.cdx-card__thumbnail.cdx-thumbnail .cdx-thumbnail__image {
+		width: 5rem;
+		height: 5rem;
+	}
+}
+
+.ext-compass-thumbnail {
+	object-fit: cover;
+	border-radius: @border-radius-base;
 }
 
 .ext-compass-table {
@@ -83,33 +113,6 @@
 	}
 }
 
-.ext-compass-curate {
-	&__actions {
-		margin-top: @spacing-100;
-	}
-
-	&__name {
-		display: block;
-		font-weight: @font-weight-bold;
-	}
-
-	&__dbname {
-		display: block;
-		color: @color-subtle;
-		font-size: @font-size-small;
-	}
-
-	&__order {
-		max-width: 6em;
-	}
-
-	&__help {
-		margin: @spacing-25 0 0;
-		color: @color-subtle;
-		font-size: @font-size-small;
-	}
-}
-
 .ext-compass-chip {
 	&--success {
 		border-color: @border-color-success;
@@ -127,5 +130,15 @@
 		border-color: @border-color-error;
 		background-color: @background-color-error-subtle;
 		color: @color-error;
+	}
+}
+
+@media screen and ( max-width: @max-width-breakpoint-mobile ) {
+	.ext-compass-cards {
+		grid-template-columns: 1fr;
+	}
+
+	.ext-compass-filters .cdx-field {
+		flex-grow: 1;
 	}
 }

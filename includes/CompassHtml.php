@@ -53,29 +53,6 @@ class CompassHtml {
 		);
 	}
 
-	public static function checkbox(
-		string $id,
-		string $name,
-		bool $checked,
-		string $ariaLabel = ''
-	): string {
-		return Html::rawElement( 'span', [ 'class' => 'cdx-checkbox' ],
-			Html::element( 'input', [
-				'class' => 'cdx-checkbox__input',
-				'type' => 'checkbox',
-				'id' => $id,
-				'name' => $name,
-				'value' => '1',
-				'checked' => $checked,
-				'aria-label' => $ariaLabel ?: false,
-			] ) .
-			Html::element( 'span', [ 'class' => 'cdx-checkbox__icon' ] ) .
-			Html::rawElement( 'div', [ 'class' => 'cdx-checkbox__label cdx-label' ],
-				Html::element( 'label', [ 'class' => 'cdx-label__label', 'for' => $id ] )
-			)
-		);
-	}
-
 	public static function submitButton( string $label, bool $progressive = true ): string {
 		$classes = [ 'cdx-button' ];
 		if ( $progressive ) {

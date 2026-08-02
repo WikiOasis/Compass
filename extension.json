@@ -14,7 +14,8 @@
 	"requires": {
 		"MediaWiki": ">= 1.43.0",
 		"extensions": {
-			"CreateWiki": "*"
+			"CreateWiki": "*",
+			"ManageWiki": "*"
 		},
 		"platform": {
 			"php": ">= 8.1"
@@ -32,17 +33,21 @@
 				"LanguageNameUtils"
 			]
 		},
-		"CompassCurate": {
-			"class": "WikiOasis\\Compass\\Specials\\SpecialCompassCurate",
-			"services": [
-				"CompassStore"
-			]
-		},
 		"RandomWiki": {
 			"class": "WikiOasis\\Compass\\Specials\\SpecialRandomWiki",
 			"services": [
 				"CreateWikiDatabaseUtils",
 				"CreateWikiValidator"
+			]
+		}
+	},
+	"APIModules": {
+		"compasscurate": {
+			"class": "WikiOasis\\Compass\\Api\\ApiCompassCurate",
+			"services": [
+				"CompassStore",
+				"ManageWikiModuleFactory",
+				"MainConfig"
 			]
 		}
 	},
@@ -88,11 +93,24 @@
 	},
 	"ResourceModules": {
 		"ext.compass.styles": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexStyleOnly": true,
+			"codexComponents": [
+				"CdxAccordion",
+				"CdxButton",
+				"CdxCard",
+				"CdxCheckbox",
+				"CdxField",
+				"CdxInfoChip",
+				"CdxLabel",
+				"CdxMessage",
+				"CdxSelect",
+				"CdxTable",
+				"CdxTextInput",
+				"CdxThumbnail"
+			],
 			"styles": [
 				"ext.compass.styles.less"
-			],
-			"dependencies": [
-				"codex-styles"
 			]
 		},
 		"ext.compass.app": {
@@ -101,16 +119,27 @@
 				"CdxAccordion",
 				"CdxButton",
 				"CdxCard",
+				"CdxDialog",
 				"CdxField",
+				"CdxIcon",
 				"CdxInfoChip",
 				"CdxMessage",
 				"CdxProgressBar",
 				"CdxSearchInput",
 				"CdxSelect",
-				"CdxTable"
+				"CdxTable",
+				"CdxThumbnail"
 			],
 			"packageFiles": [
 				"ext.compass.app/init.js",
+				{
+					"name": "ext.compass.app/icons.json",
+					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
+					"callbackParam": [
+						"cdxIconPushPin",
+						"cdxIconTrash"
+					]
+				},
 				"ext.compass.app/App.vue",
 				"ext.compass.app/HighlightCard.vue"
 			],
@@ -120,9 +149,17 @@
 				"vue"
 			],
 			"messages": [
+				"cancel",
 				"comma-separator",
+				"compass-action-delete",
+				"compass-action-pin",
+				"compass-action-unpin",
 				"compass-button-reset",
 				"compass-card-more",
+				"compass-delete-body",
+				"compass-delete-confirm",
+				"compass-delete-title",
+				"compass-error-curate",
 				"compass-error-load",
 				"compass-filter-search",
 				"compass-filter-search-placeholder",
@@ -148,6 +185,7 @@
 				"compass-sort-name",
 				"compass-sort-newest",
 				"compass-sort-oldest",
+				"compass-table-actions",
 				"compass-table-category",
 				"compass-table-established",
 				"compass-table-language",

@@ -20,5 +20,14 @@ class Installer implements LoadExtensionSchemaUpdatesHook {
 			"$dir/compass_wikis.sql",
 			true,
 		] );
+
+		$updater->addExtensionUpdateOnVirtualDomain( [
+			'virtual-createwiki',
+			'addField',
+			'compass_wikis',
+			'cpw_thumbnail',
+			"$dir/patches/patch-compass_wikis-add-cpw_thumbnail.sql",
+			true,
+		] );
 	}
 }

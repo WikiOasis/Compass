@@ -49,7 +49,8 @@ class PopulateCompassIndex extends Maintenance {
 				(string)$remoteWiki->getExtraFieldData( 'compass-description',
 					default: $remoteWiki->getExtraFieldData( 'description', default: '' )
 				),
-				(string)$remoteWiki->getExtraFieldData( 'compass-extended-description', default: '' )
+				(string)$remoteWiki->getExtraFieldData( 'compass-extended-description', default: '' ),
+				(string)$remoteWiki->getExtraFieldData( 'compass-thumbnail', default: '' )
 			);
 
 			if ( ++$indexed % $this->getBatchSize() === 0 ) {

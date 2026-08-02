@@ -37,6 +37,7 @@ class CompassStore {
 		'wiki_private',
 		'cpw_description',
 		'cpw_extended_description',
+		'cpw_thumbnail',
 		'cpw_highlighted',
 		'cpw_highlight_order',
 	];
@@ -129,31 +130,6 @@ class CompassStore {
 			->fetchResultSet();
 	}
 
-	/**
-	 * Every highlighted wiki, including ones hidden from readers, for curation.
-	 */
-	public function getCurationRows(): IResultWrapper {
-		$dbr = $this->databaseUtils->getGlobalReplicaDB();
-		return $dbr->newSelectQueryBuilder()
-			->select( [
-				'wiki_dbname',
-				'wiki_sitename',
-				'wiki_url',
-				'cpw_dbname',
-				'cpw_visible',
-				'cpw_highlight_order',
-			] )
-			->from( self::TABLE )
-			->leftJoin( 'cw_wikis', null, 'wiki_dbname = cpw_dbname' )
-			->where( [ 'cpw_highlighted' => 1 ] )
-			->orderBy(
-				[ 'cpw_highlight_order', 'cpw_dbname' ],
-				SelectQueryBuilder::SORT_ASC
-			)
-			->caller( __METHOD__ )
-			->fetchResultSet();
-	}
-
 	public function countHighlighted(): int {
 		$dbr = $this->databaseUtils->getGlobalReplicaDB();
 		return $dbr->newSelectQueryBuilder()
@@ -188,13 +164,14 @@ class CompassStore {
 	}
 
 	/**
-	 * A null description leaves the stored value untouched.
+	 * A null value leaves the stored field untouched.
 	 */
 	public function saveSettings(
 		string $dbname,
 		bool $visible,
 		?string $description,
-		?string $extendedDescription
+		?string $extendedDescription,
+		?string $thumbnail
 	): void {
 		$dbw = $this->databaseUtils->getGlobalPrimaryDB();
 		$set = [
@@ -208,6 +185,10 @@ class CompassStore {
 
 		if ( $extendedDescription !== null ) {
 			$set['cpw_extended_description'] = $extendedDescription;
+		}
+
+		if ( $thumbnail !== null ) {
+			$set['cpw_thumbnail'] = $thumbnail;
 		}
 
 		$dbw->newInsertQueryBuilder()
@@ -249,18 +230,22 @@ class CompassStore {
 		$dbw->endAtomic( __METHOD__ );
 	}
 
-	public function addHighlight( string $dbname ): void {
+	public function setHighlighted( string $dbname, bool $highlighted ): void {
 		$dbw = $this->databaseUtils->getGlobalPrimaryDB();
-		$highest = (int)$dbw->newSelectQueryBuilder()
-			->select( 'MAX(cpw_highlight_order)' )
-			->from( self::TABLE )
-			->where( [ 'cpw_highlighted' => 1 ] )
-			->caller( __METHOD__ )
-			->fetchField();
+		$order = 0;
+
+		if ( $highlighted ) {
+			$order = 1 + (int)$dbw->newSelectQueryBuilder()
+				->select( 'MAX(cpw_highlight_order)' )
+				->from( self::TABLE )
+				->where( [ 'cpw_highlighted' => 1 ] )
+				->caller( __METHOD__ )
+				->fetchField();
+		}
 
 		$set = [
-			'cpw_highlighted' => 1,
-			'cpw_highlight_order' => $highest + 1,
+			'cpw_highlighted' => (int)$highlighted,
+			'cpw_highlight_order' => $order,
 			'cpw_touched' => $dbw->timestamp(),
 		];
 
@@ -275,42 +260,6 @@ class CompassStore {
 			->set( $set )
 			->caller( __METHOD__ )
 			->execute();
-	}
-
-	/**
-	 * @param array $order Map of database name to sort position
-	 * @param string[] $remove Database names to stop highlighting
-	 */
-	public function updateHighlights( array $order, array $remove ): void {
-		$dbw = $this->databaseUtils->getGlobalPrimaryDB();
-		$dbw->startAtomic( __METHOD__ );
-
-		foreach ( $order as $dbname => $position ) {
-			$dbw->newUpdateQueryBuilder()
-				->update( self::TABLE )
-				->set( [
-					'cpw_highlight_order' => $position,
-					'cpw_touched' => $dbw->timestamp(),
-				] )
-				->where( [ 'cpw_dbname' => (string)$dbname ] )
-				->caller( __METHOD__ )
-				->execute();
-		}
-
-		if ( $remove ) {
-			$dbw->newUpdateQueryBuilder()
-				->update( self::TABLE )
-				->set( [
-					'cpw_highlighted' => 0,
-					'cpw_highlight_order' => 0,
-					'cpw_touched' => $dbw->timestamp(),
-				] )
-				->where( [ 'cpw_dbname' => $remove ] )
-				->caller( __METHOD__ )
-				->execute();
-		}
-
-		$dbw->endAtomic( __METHOD__ );
 	}
 
 	private function newListQuery(

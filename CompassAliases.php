@@ -4,7 +4,6 @@ $specialPageAliases = [];
 
 $specialPageAliases['en'] = [
 	'Compass' => [ 'Compass', 'WikiDiscover' ],
-	'CompassCurate' => [ 'CompassCurate' ],
 	'RandomWiki' => [ 'RandomWiki' ],
 ];
 

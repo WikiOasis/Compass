@@ -7,6 +7,7 @@ use MediaWiki\Context\IContextSource;
 use Miraheze\ManageWiki\Helpers\Factories\ModuleFactory;
 use Miraheze\ManageWiki\Hooks\ManageWikiCoreAddFormFieldsHook;
 use Miraheze\ManageWiki\Hooks\ManageWikiCoreFormSubmissionHook;
+use WikiOasis\Compass\CompassListing;
 use WikiOasis\Compass\Services\CompassStore;
 
 class ManageWiki implements
@@ -72,6 +73,30 @@ class ManageWiki implements
 			'disabled' => !$ceMW,
 			'section' => 'main',
 		];
+
+		$formDescriptor['compass-thumbnail'] = [
+			'label-message' => 'compass-label-thumbnail',
+			'help-message' => 'compass-label-thumbnail-help',
+			'type' => 'url',
+			'default' => $mwCore->getExtraFieldData( 'compass-thumbnail', default: '' ),
+			'maxlength' => 512,
+			'disabled' => !$ceMW,
+			'section' => 'main',
+			'validation-callback' => [ $this, 'validateThumbnail' ],
+		];
+	}
+
+	/**
+	 * @param ?string $value
+	 * @param array $alldata @phan-unused-param
+	 * @return bool|string|Message
+	 */
+	public function validateThumbnail( $value, array $alldata ) {
+		if ( !$value || CompassListing::isValidThumbnail( (string)$value ) ) {
+			return true;
+		}
+
+		return wfMessage( 'compass-error-thumbnail' );
 	}
 
 	/**
@@ -97,17 +122,26 @@ class ManageWiki implements
 
 		$description = null;
 		$extendedDescription = null;
+		$thumbnail = null;
 
 		if ( $this->config->get( 'CompassUseDescriptions' ) ) {
 			$description = (string)( $formData['compass-description'] ?? '' );
 			$extendedDescription = (string)( $formData['compass-extended-description'] ?? '' );
+			$thumbnail = (string)( $formData['compass-thumbnail'] ?? '' );
+
+			if ( !CompassListing::isValidThumbnail( $thumbnail ) ) {
+				$thumbnail = '';
+			}
 
 			$mwCore->setExtraFieldData( 'compass-description', $description, default: '' );
 			$mwCore->setExtraFieldData(
 				'compass-extended-description', $extendedDescription, default: ''
 			);
+			$mwCore->setExtraFieldData( 'compass-thumbnail', $thumbnail, default: '' );
 		}
 
-		$this->store->saveSettings( $dbname, $visible, $description, $extendedDescription );
+		$this->store->saveSettings(
+			$dbname, $visible, $description, $extendedDescription, $thumbnail
+		);
 	}
 }

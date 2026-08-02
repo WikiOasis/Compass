@@ -8,6 +8,7 @@ use MediaWiki\SpecialPage\SpecialPage;
 use Miraheze\CreateWiki\Services\CreateWikiValidator;
 use stdClass;
 use WikiOasis\Compass\CompassHtml;
+use WikiOasis\Compass\CompassListing;
 use WikiOasis\Compass\Services\CompassStore;
 
 /**
@@ -47,12 +48,14 @@ class SpecialCompass extends SpecialPage {
 			'states' => array_values( array_diff( $this->getStateOptions(), [ '*' ] ) ),
 			'languages' => $this->getLanguageOptions(),
 			'categories' => $this->getCategoryOptions(),
+			'canCurate' => $this->getAuthority()->isAllowed( 'compass-curate' ),
+			'maxHighlighted' => $this->store->getMaxHighlightedWikis(),
 		] );
 
 		$pinned = !$this->hasFilters( $filters );
 		$fallback = Html::element( 'p', [ 'class' => 'ext-compass-intro' ],
 			$this->msg( 'compass-header-info' )->text()
-		) . $this->buildFilterForm( $filters );
+		);
 
 		if ( $pinned && $offset === 0 ) {
 			$fallback .= $this->buildHighlights();
@@ -286,6 +289,7 @@ class SpecialCompass extends SpecialPage {
 
 	private function buildCard( stdClass $row ): string {
 		$text = Html::element( 'span', [ 'class' => 'cdx-card__text__title' ], $row->wiki_sitename );
+		$thumbnail = $this->buildThumbnail( $row );
 
 		$description = trim( (string)( $row->cpw_description ?? '' ) );
 		if ( $description !== '' ) {
@@ -304,7 +308,24 @@ class SpecialCompass extends SpecialPage {
 		return Html::rawElement( 'a', [
 			'class' => 'cdx-card cdx-card--is-link ext-compass-highlight',
 			'href' => $row->wiki_url ?: $this->validator->getValidUrl( $row->wiki_dbname ),
-		], Html::rawElement( 'span', [ 'class' => 'cdx-card__text' ], $text ) );
+		], $thumbnail . Html::rawElement( 'span', [ 'class' => 'cdx-card__text' ], $text ) );
+	}
+
+	private function buildThumbnail( stdClass $row ): string {
+		$url = trim( (string)( $row->cpw_thumbnail ?? '' ) );
+		if ( $url === '' || !CompassListing::isValidThumbnail( $url ) ) {
+			return '';
+		}
+
+		return Html::rawElement( 'span',
+			[ 'class' => 'cdx-thumbnail cdx-card__thumbnail' ],
+			Html::element( 'img', [
+				'class' => 'cdx-thumbnail__image ext-compass-thumbnail',
+				'src' => $url,
+				'alt' => '',
+				'loading' => 'lazy',
+			] )
+		);
 	}
 
 	private function buildResults(
@@ -321,6 +342,7 @@ class SpecialCompass extends SpecialPage {
 		if ( $total === 0 ) {
 			return Html::rawElement( 'section', [ 'class' => 'ext-compass-results' ],
 				$heading .
+				$this->buildFilterForm( $filters ) .
 				CompassHtml::message( 'notice', $this->msg( 'compass-results-empty' )->escaped() )
 			);
 		}
@@ -342,6 +364,7 @@ class SpecialCompass extends SpecialPage {
 
 		return Html::rawElement( 'section', [ 'class' => 'ext-compass-results' ],
 			$heading .
+			$this->buildFilterForm( $filters ) .
 			$this->buildTable( $rows ) .
 			Html::rawElement( 'div', [ 'class' => 'ext-compass-pagination' ],
 				Html::rawElement( 'span', [ 'class' => 'ext-compass-pagination__count' ], $count ) .
@@ -375,7 +398,7 @@ class SpecialCompass extends SpecialPage {
 	}
 
 	private function buildRow( stdClass $row ): string {
-		$name = Html::element( 'a', [
+		$name = $this->buildThumbnail( $row ) . Html::element( 'a', [
 			'class' => 'ext-compass-table__name',
 			'href' => $row->wiki_url ?: $this->validator->getValidUrl( $row->wiki_dbname ),
 		], $row->wiki_sitename );
