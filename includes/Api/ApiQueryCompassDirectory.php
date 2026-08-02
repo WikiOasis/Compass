@@ -136,8 +136,8 @@ class ApiQueryCompassDirectory extends ApiQueryBase {
 				ParamValidator::PARAM_TYPE => 'string',
 			],
 			'sort' => [
-				ParamValidator::PARAM_DEFAULT => 'name',
-				ParamValidator::PARAM_TYPE => [ 'name', 'newest', 'oldest' ],
+				ParamValidator::PARAM_DEFAULT => 'random',
+				ParamValidator::PARAM_TYPE => [ 'name', 'newest', 'oldest', 'random' ],
 			],
 			'state' => [
 				ParamValidator::PARAM_DEFAULT => '*',

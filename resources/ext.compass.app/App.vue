@@ -239,7 +239,7 @@ module.exports = exports = defineComponent( {
 				category: params.get( 'category' ) || ANY,
 				state: params.get( 'state' ) || ANY,
 				visibility: params.get( 'visibility' ) || ANY,
-				sort: params.get( 'sort' ) || 'name'
+				sort: params.get( 'sort' ) || 'random'
 			},
 			offset: Math.max( 0, parseInt( params.get( 'offset' ), 10 ) || 0 ),
 			limit: config.limit,
@@ -342,7 +342,7 @@ module.exports = exports = defineComponent( {
 			controls.push( {
 				name: 'sort',
 				label: this.$i18n( 'compass-sort-label' ).text(),
-				items: [ 'name', 'newest', 'oldest' ].map( ( sort ) => ( {
+				items: [ 'random', 'name', 'newest', 'oldest' ].map( ( sort ) => ( {
 					label: this.$i18n( 'compass-sort-' + sort ).text(),
 					value: sort
 				} ) )
@@ -502,7 +502,7 @@ module.exports = exports = defineComponent( {
 
 			Object.keys( this.filters ).forEach( ( key ) => {
 				const value = this.filters[ key ];
-				if ( value && value !== ANY && !( key === 'sort' && value === 'name' ) ) {
+				if ( value && value !== ANY && !( key === 'sort' && value === 'random' ) ) {
 					url.searchParams.set( key, value );
 				}
 			} );

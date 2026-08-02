@@ -80,6 +80,7 @@
 	"compass-sort-name": "Sort order option: alphabetical by wiki name.\n{{Identical|Name}}",
 	"compass-sort-newest": "Sort order option: most recently created wikis first.",
 	"compass-sort-oldest": "Sort order option: oldest wikis first.",
+	"compass-sort-random": "Sort order option: a shuffled order, so that browsing surfaces different wikis. This is the default.",
 	"compass-table-actions": "Column header for the curation buttons on Special:Compass.\n{{Identical|Action}}",
 	"compass-table-category": "Label for 'Category'\n{{Identical|Category}}",
 	"compass-table-description": "Label for 'Description'\n{{Identical|Description}}",

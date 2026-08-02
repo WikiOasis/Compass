@@ -5,10 +5,12 @@ namespace WikiOasis\Compass\Specials;
 use MediaWiki\Html\Html;
 use MediaWiki\Languages\LanguageNameUtils;
 use MediaWiki\SpecialPage\SpecialPage;
+use MediaWiki\Status\Status;
 use Miraheze\CreateWiki\Services\CreateWikiValidator;
 use stdClass;
 use WikiOasis\Compass\CompassHtml;
 use WikiOasis\Compass\CompassListing;
+use WikiOasis\Compass\Services\CompassCurator;
 use WikiOasis\Compass\Services\CompassStore;
 
 /**
@@ -21,6 +23,7 @@ class SpecialCompass extends SpecialPage {
 
 	public function __construct(
 		private readonly CompassStore $store,
+		private readonly CompassCurator $curator,
 		private readonly CreateWikiValidator $validator,
 		private readonly LanguageNameUtils $languageNameUtils
 	) {
@@ -42,6 +45,10 @@ class SpecialCompass extends SpecialPage {
 		$limit = max( 1, (int)$this->getConfig()->get( 'CompassWikisPerPage' ) );
 		$offset = max( 0, $this->getRequest()->getInt( 'offset' ) );
 
+		if ( $this->getRequest()->wasPosted() && $this->handleCuration( $filters, $offset ) ) {
+			return;
+		}
+
 		$out->addJsConfigVars( 'wgCompassConfig', [
 			'limit' => $limit,
 			'usePrivateFilter' => $this->usePrivateFilter(),
@@ -55,7 +62,7 @@ class SpecialCompass extends SpecialPage {
 		$pinned = !$this->hasFilters( $filters );
 		$fallback = Html::element( 'p', [ 'class' => 'ext-compass-intro' ],
 			$this->msg( 'compass-header-info' )->text()
-		);
+		) . $this->buildCurationNotice( $filters, $offset );
 
 		if ( $pinned && $offset === 0 ) {
 			$fallback .= $this->buildHighlights();
@@ -69,6 +76,108 @@ class SpecialCompass extends SpecialPage {
 				[ 'class' => 'ext-compass ext-compass-fallback' ], $fallback
 			)
 		);
+	}
+
+	private function canCurate(): bool {
+		return $this->getAuthority()->isAllowed( 'compass-curate' );
+	}
+
+	/**
+	 * @return bool Whether the request has been answered with a redirect
+	 */
+	private function handleCuration( array $filters, int $offset ): bool {
+		$request = $this->getRequest();
+		$action = $request->getVal( 'wpCurateAction' );
+		$dbname = trim( $request->getText( 'wpDbname' ) );
+
+		if ( !$this->canCurate() || !$action || $dbname === '' ) {
+			return false;
+		}
+
+		if ( !$this->getContext()->getCsrfTokenSet()->matchTokenField( 'wpEditToken' ) ) {
+			$this->getOutput()->addHTML( CompassHtml::message( 'error',
+				$this->msg( 'sessionfailure' )->escaped()
+			) );
+			return false;
+		}
+
+		$status = match ( $action ) {
+			'pin' => $this->curator->setHighlighted( $dbname, true ),
+			'unpin' => $this->curator->setHighlighted( $dbname, false ),
+			'remove' => $this->curator->removeListing( $dbname ),
+			default => null,
+		};
+
+		if ( $status === null ) {
+			return false;
+		}
+
+		if ( !$status->isGood() ) {
+			$this->getOutput()->addHTML( CompassHtml::message( 'error',
+				Status::wrap( $status )->getMessage()->escaped()
+			) );
+			return false;
+		}
+
+		$this->getOutput()->redirect( $this->getPageUrl( $filters, $offset ) );
+		return true;
+	}
+
+	private function buildCurationNotice( array $filters, int $offset ): string {
+		$dbname = trim( $this->getRequest()->getText( 'remove' ) );
+		if ( !$this->canCurate() || $dbname === '' || !$this->store->wikiExists( $dbname ) ) {
+			return '';
+		}
+
+		$return = $this->getPageUrl( $filters, $offset );
+		return CompassHtml::message( 'warning',
+			Html::element( 'strong', [], $this->msg( 'compass-delete-title' )->text() ) .
+			Html::element( 'p', [], $this->msg( 'compass-delete-body', $dbname )->text() ) .
+			Html::rawElement( 'form', [
+				'class' => 'ext-compass-actions',
+				'method' => 'post',
+				'action' => $return,
+			],
+				Html::hidden( 'wpDbname', $dbname ) .
+				Html::hidden( 'wpCurateAction', 'remove' ) .
+				Html::hidden( 'wpEditToken', $this->getCsrfToken() ) .
+				CompassHtml::submitButton( $this->msg( 'compass-delete-confirm' )->text() ) .
+				CompassHtml::linkButton( $return, $this->msg( 'cancel' )->text() )
+			)
+		);
+	}
+
+	private function getCsrfToken(): string {
+		return $this->getContext()->getCsrfTokenSet()->getToken()->toString();
+	}
+
+	private function buildActions( stdClass $row, array $filters, int $offset ): string {
+		$dbname = $row->wiki_dbname;
+		$highlighted = (bool)( $row->cpw_highlighted ?? false );
+		$label = $highlighted ? 'compass-action-unpin' : 'compass-action-pin';
+
+		$pin = Html::rawElement( 'form', [
+			'method' => 'post',
+			'action' => $this->getPageUrl( $filters, $offset ),
+		],
+			Html::hidden( 'wpDbname', $dbname ) .
+			Html::hidden( 'wpCurateAction', $highlighted ? 'unpin' : 'pin' ) .
+			Html::hidden( 'wpEditToken', $this->getCsrfToken() ) .
+			CompassHtml::submitButton( $this->msg( $label )->text(), progressive: false )
+		);
+
+		$remove = CompassHtml::linkButton(
+			$this->getPageUrl( $filters, $offset, [ 'remove' => $dbname ] ),
+			$this->msg( 'compass-action-delete' )->text(),
+			[ 'class' => [
+				'cdx-button',
+				'cdx-button--fake-button',
+				'cdx-button--fake-button--enabled',
+				'cdx-button--action-destructive',
+			] ]
+		);
+
+		return Html::rawElement( 'div', [ 'class' => 'ext-compass-actions' ], $pin . $remove );
 	}
 
 	/**
@@ -132,9 +241,9 @@ class SpecialCompass extends SpecialPage {
 			$visibility = '*';
 		}
 
-		$sort = $request->getText( 'sort', 'name' );
-		if ( !in_array( $sort, [ 'name', 'newest', 'oldest' ], true ) ) {
-			$sort = 'name';
+		$sort = $request->getText( 'sort', 'random' );
+		if ( !in_array( $sort, [ 'name', 'newest', 'oldest', 'random' ], true ) ) {
+			$sort = 'random';
 		}
 
 		return [
@@ -241,7 +350,7 @@ class SpecialCompass extends SpecialPage {
 		}
 
 		$sorts = [];
-		foreach ( [ 'name', 'newest', 'oldest' ] as $sort ) {
+		foreach ( [ 'random', 'name', 'newest', 'oldest' ] as $sort ) {
 			$sorts[$this->msg( "compass-sort-$sort" )->text()] = $sort;
 		}
 
@@ -354,7 +463,7 @@ class SpecialCompass extends SpecialPage {
 		$rows = '';
 		$shown = 0;
 		foreach ( $this->store->getWikis( $filters, $limit, $offset, $excludeHighlighted ) as $row ) {
-			$rows .= $this->buildRow( $row );
+			$rows .= $this->buildRow( $row, $filters, $offset );
 			$shown++;
 		}
 
@@ -383,6 +492,10 @@ class SpecialCompass extends SpecialPage {
 			'compass-table-established',
 		];
 
+		if ( $this->canCurate() ) {
+			$columns[] = 'compass-table-actions';
+		}
+
 		foreach ( $columns as $column ) {
 			$headers .= Html::element( 'th', [ 'scope' => 'col' ], $this->msg( $column )->text() );
 		}
@@ -397,7 +510,7 @@ class SpecialCompass extends SpecialPage {
 		);
 	}
 
-	private function buildRow( stdClass $row ): string {
+	private function buildRow( stdClass $row, array $filters, int $offset ): string {
 		$name = $this->buildThumbnail( $row ) . Html::element( 'a', [
 			'class' => 'ext-compass-table__name',
 			'href' => $row->wiki_url ?: $this->validator->getValidUrl( $row->wiki_dbname ),
@@ -425,6 +538,9 @@ class SpecialCompass extends SpecialPage {
 			$stateCell .= CompassHtml::chip( $this->msg( 'compass-label-private' )->text() );
 		}
 
+		$actions = $this->canCurate() ?
+			Html::rawElement( 'td', [], $this->buildActions( $row, $filters, $offset ) ) : '';
+
 		return Html::rawElement( 'tr', [],
 			Html::rawElement( 'th', [ 'scope' => 'row' ], $name ) .
 			Html::element( 'td', [], $this->getLanguageName( $row->wiki_language ) ) .
@@ -432,7 +548,8 @@ class SpecialCompass extends SpecialPage {
 			Html::rawElement( 'td', [], $stateCell ) .
 			Html::element( 'td', [],
 				$this->getLanguage()->userDate( $row->wiki_creation, $this->getUser() )
-			)
+			) .
+			$actions
 		);
 	}
 
@@ -463,13 +580,13 @@ class SpecialCompass extends SpecialPage {
 		return $links;
 	}
 
-	private function getPageUrl( array $filters, int $offset ): string {
+	private function getPageUrl( array $filters, int $offset, array $extra = [] ): string {
 		$query = array_filter( $filters,
 			static fn ( string $value ): bool => $value !== '' && $value !== '*'
 		);
 
 		unset( $query['sort'] );
-		if ( ( $filters['sort'] ?? 'name' ) !== 'name' ) {
+		if ( ( $filters['sort'] ?? 'random' ) !== 'random' ) {
 			$query['sort'] = $filters['sort'];
 		}
 
@@ -477,7 +594,7 @@ class SpecialCompass extends SpecialPage {
 			$query['offset'] = (string)$offset;
 		}
 
-		return $this->getPageTitle()->getLocalURL( $query );
+		return $this->getPageTitle()->getLocalURL( $query + $extra );
 	}
 
 	private function getLanguageName( string $code ): string {

@@ -60,10 +60,11 @@ class CompassStore {
 		bool $excludeHighlighted = false
 	): IResultWrapper {
 		$dbr = $this->databaseUtils->getGlobalReplicaDB();
-		[ $sortField, $sortDirection ] = match ( $filters['sort'] ?? 'name' ) {
+		[ $sortField, $sortDirection ] = match ( $filters['sort'] ?? 'random' ) {
+			'name' => [ 'wiki_sitename', SelectQueryBuilder::SORT_ASC ],
 			'newest' => [ 'wiki_creation', SelectQueryBuilder::SORT_DESC ],
 			'oldest' => [ 'wiki_creation', SelectQueryBuilder::SORT_ASC ],
-			default => [ 'wiki_sitename', SelectQueryBuilder::SORT_ASC ],
+			default => [ $this->getShuffleOrder( $dbr ), null ],
 		};
 
 		return $this->newListQuery( $dbr, $filters, $excludeHighlighted )
@@ -260,6 +261,19 @@ class CompassStore {
 			->set( $set )
 			->caller( __METHOD__ )
 			->execute();
+	}
+
+	/**
+	 * Shuffles the directory so that browsing it surfaces different wikis. The
+	 * seed only changes each hour, which keeps paging through one visit stable.
+	 */
+	private function getShuffleOrder( IReadableDatabase $dbr ): string {
+		if ( $dbr->getType() !== 'mysql' ) {
+			return 'RANDOM()';
+		}
+
+		$seed = ( (int)gmdate( 'z' ) * 24 ) + (int)gmdate( 'G' );
+		return "RAND( $seed )";
 	}
 
 	private function newListQuery(

@@ -4,11 +4,8 @@ namespace WikiOasis\Compass\Api;
 
 use MediaWiki\Api\ApiBase;
 use MediaWiki\Api\ApiMain;
-use MediaWiki\Config\Config;
-use Miraheze\ManageWiki\Helpers\Factories\ModuleFactory;
 use Wikimedia\ParamValidator\ParamValidator;
-use WikiOasis\Compass\CompassListing;
-use WikiOasis\Compass\Services\CompassStore;
+use WikiOasis\Compass\Services\CompassCurator;
 
 /**
  * The curation actions offered inline on Special:Compass.
@@ -18,9 +15,7 @@ class ApiCompassCurate extends ApiBase {
 	public function __construct(
 		ApiMain $main,
 		string $moduleName,
-		private readonly CompassStore $store,
-		private readonly ModuleFactory $moduleFactory,
-		private readonly Config $config
+		private readonly CompassCurator $curator
 	) {
 		parent::__construct( $main, $moduleName );
 	}
@@ -31,20 +26,14 @@ class ApiCompassCurate extends ApiBase {
 		$params = $this->extractRequestParams();
 		$dbname = $params['dbname'];
 
-		if ( !$this->store->wikiExists( $dbname ) ) {
-			$this->dieWithError( [ 'compass-error-nowiki', wfEscapeWikiText( $dbname ) ] );
-		}
+		$status = match ( $params['curateaction'] ) {
+			'pin' => $this->curator->setHighlighted( $dbname, true ),
+			'unpin' => $this->curator->setHighlighted( $dbname, false ),
+			default => $this->curator->removeListing( $dbname ),
+		};
 
-		switch ( $params['curateaction'] ) {
-			case 'pin':
-				$this->pin( $dbname );
-				break;
-			case 'unpin':
-				$this->store->setHighlighted( $dbname, false );
-				break;
-			case 'delete':
-				$this->deleteListing( $dbname );
-				break;
+		if ( !$status->isGood() ) {
+			$this->dieStatus( $status );
 		}
 
 		$this->getResult()->addValue( null, $this->getModuleName(), [
@@ -52,34 +41,6 @@ class ApiCompassCurate extends ApiBase {
 			'dbname' => $dbname,
 			'curateaction' => $params['curateaction'],
 		] );
-	}
-
-	private function pin( string $dbname ): void {
-		$max = $this->store->getMaxHighlightedWikis();
-		if ( !$this->store->isHighlighted( $dbname ) && $this->store->countHighlighted() >= $max ) {
-			$this->dieWithError( [ 'compass-error-full', $max ] );
-		}
-
-		$this->store->setHighlighted( $dbname, true );
-	}
-
-	/**
-	 * Removing a listing clears the descriptions through ManageWiki, so the
-	 * change is tracked there, and then drops the directory entry.
-	 */
-	private function deleteListing( string $dbname ): void {
-		$mwCore = $this->moduleFactory->core( $dbname );
-		$mwCore->setExtraFieldData(
-			'compass-visible', false,
-			default: $this->config->get( 'CompassDefaultVisibility' )
-		);
-
-		foreach ( CompassListing::EXTRA_FIELDS as $field ) {
-			$mwCore->setExtraFieldData( $field, '', default: '' );
-		}
-
-		$mwCore->commit();
-		$this->store->deleteWiki( $dbname );
 	}
 
 	/** @inheritDoc */

@@ -29,6 +29,7 @@
 			"class": "WikiOasis\\Compass\\Specials\\SpecialCompass",
 			"services": [
 				"CompassStore",
+				"CompassCurator",
 				"CreateWikiValidator",
 				"LanguageNameUtils"
 			]
@@ -45,9 +46,7 @@
 		"compasscurate": {
 			"class": "WikiOasis\\Compass\\Api\\ApiCompassCurate",
 			"services": [
-				"CompassStore",
-				"ManageWikiModuleFactory",
-				"MainConfig"
+				"CompassCurator"
 			]
 		}
 	},
@@ -185,6 +184,7 @@
 				"compass-sort-name",
 				"compass-sort-newest",
 				"compass-sort-oldest",
+				"compass-sort-random",
 				"compass-table-actions",
 				"compass-table-category",
 				"compass-table-established",
