@@ -1,177 +1,131 @@
 @import 'mediawiki.skin.variables.less';
 
-.ext-compass {
+// Special:Compass is drawn by ext.compass.app. This module is the only part of
+// it that renders with the page, so all it does is hold the directory's shape
+// until that module has something to show. The sizes below are the ones the app
+// ends up at; LoadingSkeleton.vue reuses them for the same reason.
+
+.ext-compass-skeleton {
 	display: flex;
 	flex-direction: column;
 	gap: @spacing-200;
-}
 
-.ext-compass-intro {
-	margin: 0;
-	color: @color-subtle;
-}
-
-.ext-compass-heading {
-	margin: 0 0 @spacing-100;
-	padding: 0;
-	border: 0;
-	font-size: @font-size-large;
-	font-weight: @font-weight-bold;
-}
-
-.ext-compass-filters {
-	margin-bottom: @spacing-100;
-
-	&__grid {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: flex-end;
-		gap: @spacing-50;
+	// Nothing here means anything without the app, and the app cannot arrive.
+	.client-nojs & {
+		display: none;
 	}
 
-	.cdx-field {
-		margin: 0;
-		min-width: 9em;
-		font-size: @font-size-small;
-	}
-
-	.cdx-label__label__text {
-		font-size: @font-size-x-small;
-		font-weight: @font-weight-normal;
-		color: @color-subtle;
-	}
-
-	&__actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: @spacing-50;
-		margin-top: @spacing-75;
-	}
-
-	.cdx-select,
-	.cdx-text-input {
-		width: 100%;
-	}
-
-	// Codex sizes selects for standalone form fields; the filter row is tighter.
-	.cdx-select {
-		min-width: 0;
-	}
-}
-
-.ext-compass-cards {
-	display: grid;
-	grid-template-columns: repeat( auto-fill, minmax( 22em, 1fr ) );
-	gap: @spacing-100;
-	align-items: stretch;
-}
-
-.ext-compass-highlight {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	border: 1px solid @border-color-progressive;
-	border-radius: @border-radius-base;
-	background-color: @background-color-progressive-subtle;
-	overflow: hidden;
-
-	&__card.cdx-card {
-		flex-grow: 1;
-		align-items: flex-start;
-		gap: @spacing-100;
-		padding: @spacing-150;
+	&__label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
 		border: 0;
-		border-radius: 0;
-		background-color: transparent;
+		clip-path: inset( 50% );
+		overflow: hidden;
+		white-space: nowrap;
+	}
 
-		.cdx-card__text__title {
-			font-size: @font-size-large;
+	&__intro,
+	&__heading,
+	&__toolbar,
+	&__card,
+	&__head,
+	&__row,
+	&__pagination {
+		background-color: @background-color-interactive;
+		border-radius: @border-radius-base;
+		animation: ext-compass-skeleton-pulse 1200ms ease-in-out infinite alternate;
+	}
+
+	// One line of muted introduction text.
+	&__intro {
+		max-width: 40em;
+		height: 1.5em;
+	}
+
+	// A section heading, plus the margin the app leaves under it.
+	&__heading {
+		width: 12em;
+		height: 1.5em;
+		margin-bottom: @spacing-100;
+		font-size: @font-size-large;
+	}
+
+	// The search field, the filter row beneath it, and their margin.
+	&__toolbar {
+		height: 6rem;
+		margin-bottom: @spacing-100;
+	}
+
+	&__cards {
+		display: grid;
+		grid-template-columns: repeat( auto-fill, minmax( 22em, 1fr ) );
+		gap: @spacing-100;
+	}
+
+	// A highlight card: a 5rem thumbnail inside 1.5rem of padding.
+	&__card {
+		height: 8rem;
+	}
+
+	&__table {
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+	}
+
+	&__head {
+		height: 2.75rem;
+	}
+
+	// A row carrying a wiki name, its description and the expander below them.
+	&__row {
+		height: 5rem;
+	}
+
+	&__pagination {
+		width: 100%;
+		max-width: 24em;
+		height: 2rem;
+		margin: @spacing-100 0 0 auto;
+	}
+}
+
+// The pulse is decoration; hold it still for readers who ask for that.
+@media ( prefers-reduced-motion: reduce ) {
+	.ext-compass-skeleton {
+		&__intro,
+		&__heading,
+		&__toolbar,
+		&__card,
+		&__head,
+		&__row,
+		&__pagination {
+			animation: none;
 		}
-
-		.cdx-card__thumbnail.cdx-thumbnail .cdx-thumbnail__image {
-			width: 5rem;
-			height: 5rem;
-			border-radius: @border-radius-base;
-		}
-	}
-
-	&__more {
-		padding: 0 @spacing-150;
-	}
-
-	.ext-compass-actions {
-		padding: @spacing-50 @spacing-100;
-		border-top: 1px solid @border-color-subtle;
 	}
 }
 
-.ext-compass-thumbnail {
-	object-fit: cover;
-	border-radius: @border-radius-base;
-}
-
-.ext-compass-table {
-	&__name {
-		font-weight: @font-weight-bold;
+@keyframes ext-compass-skeleton-pulse {
+	from {
+		opacity: 1;
 	}
 
-	&__description {
-		margin: @spacing-25 0 0;
-		color: @color-subtle;
-		font-weight: @font-weight-normal;
+	to {
+		opacity: 0.55;
 	}
 }
 
-.ext-compass-actions {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: flex-end;
-	gap: @spacing-50;
-
-	form {
-		display: inline;
-	}
-}
-
-.ext-compass-pagination {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: @spacing-50;
-	margin-top: @spacing-100;
-
-	&__count {
-		margin-right: auto;
-		color: @color-subtle;
-	}
-}
-
-.ext-compass-chip {
-	&--success {
-		border-color: @border-color-success;
-		background-color: @background-color-success-subtle;
-		color: @color-success;
-	}
-
-	&--warning {
-		border-color: @border-color-warning;
-		background-color: @background-color-warning-subtle;
-		color: @color-warning;
-	}
-
-	&--error {
-		border-color: @border-color-error;
-		background-color: @background-color-error-subtle;
-		color: @color-error;
-	}
+// Left behind when the app cannot be started at all.
+.ext-compass-error,
+.ext-compass-nojs {
+	color: @color-error;
 }
 
 @media screen and ( max-width: @max-width-breakpoint-mobile ) {
-	.ext-compass-cards {
+	.ext-compass-skeleton__cards {
 		grid-template-columns: 1fr;
-	}
-
-	.ext-compass-filters .cdx-field {
-		flex-grow: 1;
 	}
 }

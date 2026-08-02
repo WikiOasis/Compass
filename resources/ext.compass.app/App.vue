@@ -1,173 +1,188 @@
 <template>
 	<div class="ext-compass-app">
-		<p class="ext-compass-app__intro">
-			{{ $i18n( 'compass-header-info' ).text() }}
-		</p>
+		<loading-skeleton
+			v-if="!loaded"
+			:cards="config.highlightCount"
+			:rows="limit"
+		></loading-skeleton>
 
-		<cdx-message v-if="error" type="error">
-			{{ error }}
-		</cdx-message>
+		<template v-else>
+			<p class="ext-compass-app__intro">
+				{{ $i18n( 'compass-header-info' ).text() }}
+			</p>
 
-		<section
-			v-if="showHighlights && highlights.length"
-			class="ext-compass-app__highlights"
-		>
-			<h2 class="ext-compass-app__heading">
-				{{ $i18n( 'compass-highlights-heading' ).text() }}
-			</h2>
-			<div class="ext-compass-app__cards">
-				<highlight-card
-					v-for="wiki in highlights"
-					:key="wiki.dbname"
-					:wiki="wiki"
-					:language-name="languageName( wiki.language )"
-					:category-label="categoryLabel( wiki.category )"
-					:can-curate="config.canCurate"
-					@unpin="curate( $event, 'unpin' )"
-					@delete="confirmDelete"
-				></highlight-card>
-			</div>
-		</section>
+			<cdx-message v-if="error" type="error">
+				{{ error }}
+			</cdx-message>
 
-		<section class="ext-compass-app__results">
-			<h2 class="ext-compass-app__heading">
-				{{ $i18n( 'compass-results-heading' ).text() }}
-			</h2>
-
-			<div
-				class="ext-compass-app__toolbar"
-				role="search"
-				:aria-label="$i18n( 'compass-header' ).text()"
+			<section
+				v-if="showHighlights && highlights.length"
+				class="ext-compass-app__highlights"
 			>
-				<cdx-search-input
-					v-model="searchInput"
-					class="ext-compass-app__search"
-					:placeholder="$i18n( 'compass-filter-search-placeholder' ).text()"
-					:aria-label="$i18n( 'compass-filter-search' ).text()"
-					@update:model-value="onSearchInput"
-				></cdx-search-input>
+				<h2 class="ext-compass-app__heading">
+					{{ $i18n( 'compass-highlights-heading' ).text() }}
+				</h2>
+				<div class="ext-compass-app__cards">
+					<highlight-card
+						v-for="wiki in highlights"
+						:key="wiki.dbname"
+						:wiki="wiki"
+						:language-name="languageName( wiki.language )"
+						:category-label="categoryLabel( wiki.category )"
+						:can-curate="config.canCurate"
+						@unpin="curate( $event, 'unpin' )"
+						@delete="confirmDelete"
+					></highlight-card>
+				</div>
+			</section>
 
-				<div class="ext-compass-app__filters">
-					<cdx-field
-						v-for="filter in filterControls"
-						:key="filter.name"
-						class="ext-compass-app__filter"
-					>
-						<template #label>
-							{{ filter.label }}
-						</template>
-						<cdx-select
-							v-model:selected="filters[ filter.name ]"
-							:menu-items="filter.items"
-							@update:selected="applyFilters"
-						></cdx-select>
-					</cdx-field>
+			<section class="ext-compass-app__results">
+				<h2 class="ext-compass-app__heading">
+					{{ $i18n( 'compass-results-heading' ).text() }}
+				</h2>
 
-					<cdx-button
-						v-if="isFiltered"
-						class="ext-compass-app__reset"
-						@click="reset"
-					>
-						{{ $i18n( 'compass-button-reset' ).text() }}
+				<div
+					class="ext-compass-app__toolbar"
+					role="search"
+					:aria-label="$i18n( 'compass-header' ).text()"
+				>
+					<cdx-search-input
+						v-model="searchInput"
+						class="ext-compass-app__search"
+						:placeholder="$i18n( 'compass-filter-search-placeholder' ).text()"
+						:aria-label="$i18n( 'compass-filter-search' ).text()"
+						@update:model-value="onSearchInput"
+					></cdx-search-input>
+
+					<div class="ext-compass-app__filters">
+						<cdx-field
+							v-for="filter in filterControls"
+							:key="filter.name"
+							class="ext-compass-app__filter"
+						>
+							<template #label>
+								{{ filter.label }}
+							</template>
+							<cdx-select
+								v-model:selected="filters[ filter.name ]"
+								:menu-items="filter.items"
+								@update:selected="applyFilters"
+							></cdx-select>
+						</cdx-field>
+
+						<cdx-button
+							v-if="isFiltered"
+							class="ext-compass-app__reset"
+							@click="reset"
+						>
+							{{ $i18n( 'compass-button-reset' ).text() }}
+						</cdx-button>
+					</div>
+				</div>
+
+				<cdx-progress-bar
+					v-if="loading"
+					class="ext-compass-app__progress"
+					:aria-label="$i18n( 'compass-loading' ).text()"
+				></cdx-progress-bar>
+
+				<cdx-table
+					class="ext-compass-app__table"
+					:caption="$i18n( 'compass-results-heading' ).text()"
+					:hide-caption="true"
+					:columns="columns"
+					:data="rows"
+					:use-row-headers="true"
+				>
+					<template #item-sitename="{ row }">
+						<div class="ext-compass-app__wiki">
+							<cdx-thumbnail
+								v-if="row.wiki.thumbnail"
+								class="ext-compass-app__thumbnail"
+								:thumbnail="{ url: row.wiki.thumbnail }"
+							></cdx-thumbnail>
+							<div>
+								<a class="ext-compass-app__name" :href="row.wiki.url">
+									{{ row.wiki.sitename }}
+								</a>
+								<p v-if="row.wiki.description" class="ext-compass-app__description">
+									{{ row.wiki.description }}
+								</p>
+								<cdx-accordion
+									v-if="row.wiki.extendeddescription || row.wiki.statistics"
+									class="ext-compass-app__more"
+								>
+									<template #title>
+										{{ $i18n( 'compass-card-more' ).text() }}
+									</template>
+									<p v-if="row.wiki.extendeddescription">
+										{{ row.wiki.extendeddescription }}
+									</p>
+									<wiki-statistics
+										v-if="row.wiki.statistics"
+										:statistics="row.wiki.statistics"
+									></wiki-statistics>
+								</cdx-accordion>
+							</div>
+						</div>
+					</template>
+
+					<template #item-language="{ row }">
+						{{ languageName( row.wiki.language ) }}
+					</template>
+
+					<template #item-category="{ row }">
+						{{ categoryLabel( row.wiki.category ) }}
+					</template>
+
+					<template #item-state="{ row }">
+						<cdx-info-chip :status="stateStatus( row.wiki.state )">
+							{{ stateLabel( row.wiki.state ) }}
+						</cdx-info-chip>
+						<cdx-info-chip v-if="row.wiki.private">
+							{{ $i18n( 'compass-label-private' ).text() }}
+						</cdx-info-chip>
+					</template>
+
+					<template #item-actions="{ row }">
+						<div class="ext-compass-app__actions">
+							<cdx-button
+								weight="quiet"
+								:aria-label="pinLabel( row.wiki )"
+								:title="pinLabel( row.wiki )"
+								@click="curate( row.wiki, row.wiki.highlighted ? 'unpin' : 'pin' )"
+							>
+								<cdx-icon :icon="icons.cdxIconPushPin"></cdx-icon>
+							</cdx-button>
+							<cdx-button
+								weight="quiet"
+								action="destructive"
+								:aria-label="$i18n( 'compass-action-delete' ).text()"
+								:title="$i18n( 'compass-action-delete' ).text()"
+								@click="confirmDelete( row.wiki )"
+							>
+								<cdx-icon :icon="icons.cdxIconTrash"></cdx-icon>
+							</cdx-button>
+						</div>
+					</template>
+
+					<template #empty-state>
+						{{ $i18n( 'compass-results-empty' ).text() }}
+					</template>
+				</cdx-table>
+
+				<div v-if="total" class="ext-compass-app__pagination">
+					<span class="ext-compass-app__count">{{ countText }}</span>
+					<cdx-button :disabled="offset === 0" @click="page( -1 )">
+						{{ $i18n( 'compass-pagination-previous' ).text() }}
+					</cdx-button>
+					<cdx-button :disabled="!hasNext" @click="page( 1 )">
+						{{ $i18n( 'compass-pagination-next' ).text() }}
 					</cdx-button>
 				</div>
-			</div>
+			</section>
+		</template>
 
-			<cdx-progress-bar
-				v-if="loading"
-				class="ext-compass-app__progress"
-				:aria-label="$i18n( 'compass-loading' ).text()"
-			></cdx-progress-bar>
-
-			<cdx-table
-				class="ext-compass-app__table"
-				:caption="$i18n( 'compass-results-heading' ).text()"
-				:hide-caption="true"
-				:columns="columns"
-				:data="rows"
-				:use-row-headers="true"
-			>
-				<template #item-sitename="{ row }">
-					<div class="ext-compass-app__wiki">
-						<cdx-thumbnail
-							v-if="row.wiki.thumbnail"
-							class="ext-compass-app__thumbnail"
-							:thumbnail="{ url: row.wiki.thumbnail }"
-						></cdx-thumbnail>
-						<div>
-							<a class="ext-compass-app__name" :href="row.wiki.url">
-								{{ row.wiki.sitename }}
-							</a>
-							<p v-if="row.wiki.description" class="ext-compass-app__description">
-								{{ row.wiki.description }}
-							</p>
-							<cdx-accordion
-								v-if="row.wiki.extendeddescription"
-								class="ext-compass-app__more"
-							>
-								<template #title>
-									{{ $i18n( 'compass-card-more' ).text() }}
-								</template>
-								<p>{{ row.wiki.extendeddescription }}</p>
-							</cdx-accordion>
-						</div>
-					</div>
-				</template>
-
-				<template #item-language="{ row }">
-					{{ languageName( row.wiki.language ) }}
-				</template>
-
-				<template #item-category="{ row }">
-					{{ categoryLabel( row.wiki.category ) }}
-				</template>
-
-				<template #item-state="{ row }">
-					<cdx-info-chip :status="stateStatus( row.wiki.state )">
-						{{ stateLabel( row.wiki.state ) }}
-					</cdx-info-chip>
-					<cdx-info-chip v-if="row.wiki.private">
-						{{ $i18n( 'compass-label-private' ).text() }}
-					</cdx-info-chip>
-				</template>
-
-				<template #item-actions="{ row }">
-					<div class="ext-compass-app__actions">
-						<cdx-button
-							weight="quiet"
-							:aria-label="pinLabel( row.wiki )"
-							:title="pinLabel( row.wiki )"
-							@click="curate( row.wiki, row.wiki.highlighted ? 'unpin' : 'pin' )"
-						>
-							<cdx-icon :icon="icons.cdxIconPushPin"></cdx-icon>
-						</cdx-button>
-						<cdx-button
-							weight="quiet"
-							action="destructive"
-							:aria-label="$i18n( 'compass-action-delete' ).text()"
-							:title="$i18n( 'compass-action-delete' ).text()"
-							@click="confirmDelete( row.wiki )"
-						>
-							<cdx-icon :icon="icons.cdxIconTrash"></cdx-icon>
-						</cdx-button>
-					</div>
-				</template>
-
-				<template #empty-state>
-					{{ $i18n( 'compass-results-empty' ).text() }}
-				</template>
-			</cdx-table>
-
-			<div v-if="total" class="ext-compass-app__pagination">
-				<span class="ext-compass-app__count">{{ countText }}</span>
-				<cdx-button :disabled="offset === 0" @click="page( -1 )">
-					{{ $i18n( 'compass-pagination-previous' ).text() }}
-				</cdx-button>
-				<cdx-button :disabled="!hasNext" @click="page( 1 )">
-					{{ $i18n( 'compass-pagination-next' ).text() }}
-				</cdx-button>
-			</div>
-		</section>
 
 		<cdx-dialog
 			v-model:open="deleteOpen"
@@ -201,6 +216,8 @@ const {
 } = require( './codex.js' );
 const icons = require( './icons.json' );
 const HighlightCard = require( './HighlightCard.vue' );
+const LoadingSkeleton = require( './LoadingSkeleton.vue' );
+const WikiStatistics = require( './WikiStatistics.vue' );
 
 const ANY = '*';
 const SEARCH_DELAY = 300;
@@ -220,7 +237,9 @@ module.exports = exports = defineComponent( {
 		CdxSelect,
 		CdxTable,
 		CdxThumbnail,
-		HighlightCard
+		HighlightCard,
+		LoadingSkeleton,
+		WikiStatistics
 	},
 
 	data() {
@@ -247,6 +266,9 @@ module.exports = exports = defineComponent( {
 			wikis: [],
 			highlights: [],
 			loading: true,
+			// The placeholder stays up until the first response, so that the
+			// page settles once rather than twice.
+			loaded: false,
 			error: '',
 			deleteOpen: false,
 			deleteTarget: null
@@ -563,6 +585,7 @@ module.exports = exports = defineComponent( {
 				this.total = 0;
 			} ).finally( () => {
 				this.loading = false;
+				this.loaded = true;
 			} );
 		}
 	},

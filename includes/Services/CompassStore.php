@@ -40,6 +40,9 @@ class CompassStore {
 		'cpw_thumbnail',
 		'cpw_highlighted',
 		'cpw_highlight_order',
+		'cpw_edits',
+		'cpw_articles',
+		'cpw_active_users',
 	];
 
 	public function __construct(
@@ -195,6 +198,31 @@ class CompassStore {
 		$dbw->newInsertQueryBuilder()
 			->insertInto( self::TABLE )
 			->row( [ 'cpw_dbname' => $dbname ] + $set )
+			->onDuplicateKeyUpdate()
+			->uniqueIndexFields( [ 'cpw_dbname' ] )
+			->set( $set )
+			->caller( __METHOD__ )
+			->execute();
+	}
+
+	/**
+	 * @param array{edits:int,articles:int,activeusers:int} $statistics
+	 */
+	public function updateStatistics( string $dbname, array $statistics ): void {
+		$dbw = $this->databaseUtils->getGlobalPrimaryDB();
+		$set = [
+			'cpw_edits' => $statistics['edits'],
+			'cpw_articles' => $statistics['articles'],
+			'cpw_active_users' => $statistics['activeusers'],
+			'cpw_touched' => $dbw->timestamp(),
+		];
+
+		$dbw->newInsertQueryBuilder()
+			->insertInto( self::TABLE )
+			->row( [
+				'cpw_dbname' => $dbname,
+				'cpw_visible' => (int)$this->options->get( 'CompassDefaultVisibility' ),
+			] + $set )
 			->onDuplicateKeyUpdate()
 			->uniqueIndexFields( [ 'cpw_dbname' ] )
 			->set( $set )

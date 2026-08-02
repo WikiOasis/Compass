@@ -29,8 +29,6 @@
 			"class": "WikiOasis\\Compass\\Specials\\SpecialCompass",
 			"services": [
 				"CompassStore",
-				"CompassCurator",
-				"CreateWikiValidator",
 				"LanguageNameUtils"
 			]
 		},
@@ -92,21 +90,6 @@
 	},
 	"ResourceModules": {
 		"ext.compass.styles": {
-			"class": "MediaWiki\\ResourceLoader\\CodexModule",
-			"codexStyleOnly": true,
-			"codexComponents": [
-				"CdxAccordion",
-				"CdxButton",
-				"CdxCard",
-				"CdxField",
-				"CdxInfoChip",
-				"CdxLabel",
-				"CdxMessage",
-				"CdxSelect",
-				"CdxTable",
-				"CdxTextInput",
-				"CdxThumbnail"
-			],
 			"styles": [
 				"ext.compass.styles.less"
 			]
@@ -137,8 +120,11 @@
 					"name": "icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
+						"cdxIconArticles",
+						"cdxIconEdit",
 						"cdxIconPushPin",
-						"cdxIconTrash"
+						"cdxIconTrash",
+						"cdxIconUserActive"
 					]
 				},
 				{
@@ -148,11 +134,20 @@
 				{
 					"name": "HighlightCard.vue",
 					"file": "ext.compass.app/HighlightCard.vue"
+				},
+				{
+					"name": "LoadingSkeleton.vue",
+					"file": "ext.compass.app/LoadingSkeleton.vue"
+				},
+				{
+					"name": "WikiStatistics.vue",
+					"file": "ext.compass.app/WikiStatistics.vue"
 				}
 			],
 			"dependencies": [
 				"mediawiki.api",
 				"mediawiki.jqueryMsg",
+				"mediawiki.language",
 				"vue"
 			],
 			"messages": [
@@ -193,6 +188,9 @@
 				"compass-sort-newest",
 				"compass-sort-oldest",
 				"compass-sort-random",
+				"compass-statistics-articles",
+				"compass-statistics-edits",
+				"compass-statistics-users",
 				"compass-table-actions",
 				"compass-table-category",
 				"compass-table-established",
@@ -255,6 +253,7 @@
 		"ManageWiki": {
 			"class": "WikiOasis\\Compass\\HookHandlers\\ManageWiki",
 			"services": [
+				"CompassStatistics",
 				"CompassStore",
 				"MainConfig"
 			]

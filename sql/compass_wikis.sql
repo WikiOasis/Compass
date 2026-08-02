@@ -6,6 +6,9 @@ CREATE TABLE /*_*/compass_wikis (
   cpw_thumbnail TEXT NULL,
   cpw_highlighted TINYINT NOT NULL DEFAULT '0',
   cpw_highlight_order INT NOT NULL DEFAULT '0',
+  cpw_edits BIGINT UNSIGNED NULL,
+  cpw_articles BIGINT UNSIGNED NULL,
+  cpw_active_users BIGINT UNSIGNED NULL,
   cpw_touched BINARY(14) NOT NULL
 ) /*$wgDBTableOptions*/;
 

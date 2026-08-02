@@ -16,11 +16,20 @@
 			</template>
 		</cdx-card>
 
-		<cdx-accordion v-if="wiki.extendeddescription" class="ext-compass-highlight__more">
+		<cdx-accordion
+			v-if="wiki.extendeddescription || wiki.statistics"
+			class="ext-compass-highlight__more"
+		>
 			<template #title>
 				{{ $i18n( 'compass-card-more' ).text() }}
 			</template>
-			<p>{{ wiki.extendeddescription }}</p>
+			<p v-if="wiki.extendeddescription">
+				{{ wiki.extendeddescription }}
+			</p>
+			<wiki-statistics
+				v-if="wiki.statistics"
+				:statistics="wiki.statistics"
+			></wiki-statistics>
 		</cdx-accordion>
 
 		<div v-if="canCurate" class="ext-compass-highlight__actions">
@@ -49,10 +58,11 @@
 const { defineComponent } = require( 'vue' );
 const { CdxAccordion, CdxButton, CdxCard, CdxIcon } = require( './codex.js' );
 const icons = require( './icons.json' );
+const WikiStatistics = require( './WikiStatistics.vue' );
 
 module.exports = exports = defineComponent( {
 	name: 'HighlightCard',
-	components: { CdxAccordion, CdxButton, CdxCard, CdxIcon },
+	components: { CdxAccordion, CdxButton, CdxCard, CdxIcon, WikiStatistics },
 
 	props: {
 		wiki: {

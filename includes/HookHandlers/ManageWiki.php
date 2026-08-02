@@ -4,10 +4,12 @@ namespace WikiOasis\Compass\HookHandlers;
 
 use MediaWiki\Config\Config;
 use MediaWiki\Context\IContextSource;
+use MediaWiki\Deferred\DeferredUpdates;
 use Miraheze\ManageWiki\Helpers\Factories\ModuleFactory;
 use Miraheze\ManageWiki\Hooks\ManageWikiCoreAddFormFieldsHook;
 use Miraheze\ManageWiki\Hooks\ManageWikiCoreFormSubmissionHook;
 use WikiOasis\Compass\CompassListing;
+use WikiOasis\Compass\Services\CompassStatistics;
 use WikiOasis\Compass\Services\CompassStore;
 
 class ManageWiki implements
@@ -16,6 +18,7 @@ class ManageWiki implements
 {
 
 	public function __construct(
+		private readonly CompassStatistics $statistics,
 		private readonly CompassStore $store,
 		private readonly Config $config
 	) {
@@ -148,6 +151,17 @@ class ManageWiki implements
 
 		$this->store->saveSettings(
 			$dbname, $visible, $description, $extendedDescription, $thumbnail
+		);
+
+		if ( !$visible ) {
+			return;
+		}
+
+		// A wiki that has just opted in would otherwise be listed without any
+		// statistics until updateCompassStatistics.php next runs. Reading them
+		// means connecting to the other wiki, so it happens after the response.
+		DeferredUpdates::addCallableUpdate(
+			fn () => $this->statistics->refresh( $dbname )
 		);
 	}
 }

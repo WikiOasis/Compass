@@ -29,5 +29,16 @@ class Installer implements LoadExtensionSchemaUpdatesHook {
 			"$dir/patches/patch-compass_wikis-add-cpw_thumbnail.sql",
 			true,
 		] );
+
+		// One patch adds all three statistics columns, so the remaining two are
+		// already there by the time their own check runs.
+		$updater->addExtensionUpdateOnVirtualDomain( [
+			'virtual-createwiki',
+			'addField',
+			'compass_wikis',
+			'cpw_edits',
+			"$dir/patches/patch-compass_wikis-add-statistics.sql",
+			true,
+		] );
 	}
 }

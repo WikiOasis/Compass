@@ -3,6 +3,7 @@
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\MediaWikiServices;
 use WikiOasis\Compass\Services\CompassCurator;
+use WikiOasis\Compass\Services\CompassStatistics;
 use WikiOasis\Compass\Services\CompassStore;
 
 return [
@@ -14,6 +15,12 @@ return [
 			),
 			$services->get( 'CompassStore' ),
 			$services->get( 'ManageWikiModuleFactory' )
+		);
+	},
+	'CompassStatistics' => static function ( MediaWikiServices $services ): CompassStatistics {
+		return new CompassStatistics(
+			$services->get( 'CreateWikiDatabaseUtils' ),
+			$services->get( 'CompassStore' )
 		);
 	},
 	'CompassStore' => static function ( MediaWikiServices $services ): CompassStore {

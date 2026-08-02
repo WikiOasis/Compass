@@ -16,6 +16,8 @@ use WikiOasis\Compass\Services\CompassStore;
  */
 class ApiQueryCompassDirectory extends ApiQueryBase {
 
+	private const SEARCH_MAX_LENGTH = 128;
+
 	public function __construct(
 		ApiQuery $query,
 		string $moduleName,
@@ -42,7 +44,7 @@ class ApiQueryCompassDirectory extends ApiQueryBase {
 		}
 
 		$filters = [
-			'search' => $params['search'],
+			'search' => mb_substr( trim( $params['search'] ), 0, self::SEARCH_MAX_LENGTH ),
 			'language' => $params['language'],
 			'category' => $params['category'],
 			'state' => $params['state'],
@@ -63,7 +65,7 @@ class ApiQueryCompassDirectory extends ApiQueryBase {
 	}
 
 	private function formatRow( stdClass $row ): array {
-		return [
+		$wiki = [
 			'dbname' => $row->wiki_dbname,
 			'sitename' => $row->wiki_sitename,
 			'url' => $row->wiki_url ?: $this->validator->getValidUrl( $row->wiki_dbname ),
@@ -79,6 +81,33 @@ class ApiQueryCompassDirectory extends ApiQueryBase {
 			'thumbnail' => (string)( $row->cpw_thumbnail ?? '' ),
 			'description' => (string)( $row->cpw_description ?? '' ),
 			'extendeddescription' => (string)( $row->cpw_extended_description ?? '' ),
+		];
+
+		$statistics = $this->getStatistics( $row );
+		if ( $statistics !== null ) {
+			$wiki['statistics'] = $statistics;
+		}
+
+		return $wiki;
+	}
+
+	/**
+	 * @return ?array{edits:int,articles:int,activeusers:int} Null for a wiki
+	 *   whose statistics have never been collected
+	 */
+	private function getStatistics( stdClass $row ): ?array {
+		$edits = $row->cpw_edits ?? null;
+		$articles = $row->cpw_articles ?? null;
+		$activeUsers = $row->cpw_active_users ?? null;
+
+		if ( $edits === null && $articles === null && $activeUsers === null ) {
+			return null;
+		}
+
+		return [
+			'edits' => (int)$edits,
+			'articles' => (int)$articles,
+			'activeusers' => (int)$activeUsers,
 		];
 	}
 
