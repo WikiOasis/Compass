@@ -50,6 +50,9 @@ class ManageWiki implements
 			return;
 		}
 
+		// The remaining fields only matter for a wiki that is actually listed.
+		$hideIfUnlisted = [ '!==', 'compass-visible', '1' ];
+
 		$formDescriptor['compass-description'] = [
 			'label-message' => 'compass-label-description',
 			'help-message' => 'compass-label-description-help',
@@ -60,6 +63,7 @@ class ManageWiki implements
 			),
 			'maxlength' => $this->config->get( 'CompassDescriptionsMaxLength' ),
 			'disabled' => !$ceMW,
+			'hide-if' => $hideIfUnlisted,
 			'section' => 'main',
 		];
 
@@ -71,6 +75,7 @@ class ManageWiki implements
 			'default' => $mwCore->getExtraFieldData( 'compass-extended-description', default: '' ),
 			'maxlength' => $this->config->get( 'CompassExtendedDescriptionsMaxLength' ),
 			'disabled' => !$ceMW,
+			'hide-if' => $hideIfUnlisted,
 			'section' => 'main',
 		];
 
@@ -81,6 +86,7 @@ class ManageWiki implements
 			'default' => $mwCore->getExtraFieldData( 'compass-thumbnail', default: '' ),
 			'maxlength' => 512,
 			'disabled' => !$ceMW,
+			'hide-if' => $hideIfUnlisted,
 			'section' => 'main',
 			'validation-callback' => [ $this, 'validateThumbnail' ],
 		];

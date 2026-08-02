@@ -493,22 +493,25 @@ module.exports = exports = defineComponent( {
 		},
 
 		updateUrl() {
-			const params = new URLSearchParams();
+			// Rewrite only the parameters this page owns, so that index.php
+			// style URLs keep their title.
+			const url = new URL( window.location.href );
+			Object.keys( this.filters ).concat( [ 'offset' ] ).forEach( ( key ) => {
+				url.searchParams.delete( key );
+			} );
+
 			Object.keys( this.filters ).forEach( ( key ) => {
 				const value = this.filters[ key ];
 				if ( value && value !== ANY && !( key === 'sort' && value === 'name' ) ) {
-					params.set( key, value );
+					url.searchParams.set( key, value );
 				}
 			} );
 
 			if ( this.offset > 0 ) {
-				params.set( 'offset', String( this.offset ) );
+				url.searchParams.set( 'offset', String( this.offset ) );
 			}
 
-			const query = params.toString();
-			window.history.replaceState( null, '',
-				window.location.pathname + ( query ? '?' + query : '' )
-			);
+			window.history.replaceState( null, '', url.toString() );
 		},
 
 		load() {
