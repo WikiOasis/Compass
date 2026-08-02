@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chinamoonroll"
+		]
+	},
+	"apihelp-query+compass-param-state": "Saring antuk CreateWiki mawit negari saking satunggil wiki",
+	"apihelp-query+compass-summary": "Polihin lis wiki ring CreateWiki wikifarm",
+	"randomwiki": "Alih nuju wiki ulah-aluh",
+	"compass": "Nemu wiki",
+	"compass-table-category": "Kategori",
+	"compass-table-established": "Kaadegang",
+	"compass-table-language": "Basa",
+	"compass-table-state": "Paindikan",
+	"compass-table-visibility": "Kacingakan",
+	"compass-table-wiki": "Aran Wiki"
+}

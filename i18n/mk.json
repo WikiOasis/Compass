@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"apihelp-query+compass-example": "Прикажи ги сите викија на фармата.",
+	"apihelp-query+compass-param-category": "Филтрирај по зададена категорија на викито според „Создај вики“",
+	"apihelp-query+compass-param-customurl": "Филтрирај според тоа дали викито има зададена прилагодена URL-адреса со Создај вики",
+	"apihelp-query+compass-param-language": "Филтрирај по зададен јазик на викито според „Создај вики“",
+	"apihelp-query+compass-param-limit": "Највеќе ставки за приказ.",
+	"apihelp-query+compass-param-prop": "Кои информации за определеното вики да се дадат.",
+	"apihelp-query+compass-param-state": "Филтрирај по состојба на викито според „Создај вики“",
+	"apihelp-query+compass-param-wikis": "Дај список на конкретни викија.",
+	"apihelp-query+compass-summary": "Дај список на викија во фармата на „Создај вики“.",
+	"randomwiki": "Пренасочи кон случајно вики",
+	"randomwiki-header": "Изберете категорија и јазик за да бидете одведени на случајно вики кое одговара на одбраните услови.",
+	"randomwiki-parameters": "Изберете параметри",
+	"compass": "Откривање на викија",
+	"compass-desc": "Овозможува [[Special:Compass|откривање на викија]] на фармата со [[Special:CreateWiki|Создај вики]].",
+	"compass-header": "Изберете параметри за пребарување",
+	"compass-header-info": "Можете да пребарувате викија во оваа фарма избирајќи параметри како јазик и други.",
+	"compass-label-active": "Активно",
+	"compass-label-any": "(било кое)",
+	"compass-label-closed": "Затворено",
+	"compass-label-deleted": "Избришано",
+	"compass-label-description": "Краток опис",
+	"compass-label-inactive": "Неактивно",
+	"compass-label-locked": "Заклучено",
+	"compass-label-open": "Отворено",
+	"compass-label-private": "Приватно",
+	"compass-label-public": "Јавно",
+	"compass-table-category": "Категорија",
+	"compass-table-description": "Опис",
+	"compass-table-established": "Воспоставено",
+	"compass-table-language": "Јазик",
+	"compass-table-state": "Состојба",
+	"compass-table-visibility": "Видливост",
+	"compass-table-wiki": "Име на викито"
+}

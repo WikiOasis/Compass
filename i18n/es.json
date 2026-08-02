@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"Agent",
+			"EmicraftNoob",
+			"Fitoschido",
+			"HylianAngel",
+			"Jackiezelaya",
+			"Jakeukalane",
+			"JorgeElias2302"
+		]
+	},
+	"apihelp-query+compass-example": "Mostrar todas las wikis del formulario.",
+	"apihelp-query+compass-param-limit": "Número máximo de resultados para mostrar.",
+	"apihelp-query+compass-param-prop": "Información que devolver acerca de una wiki definida.",
+	"apihelp-query+compass-param-state": "Filtrar por el estado definido de CreateWiki de una wiki.",
+	"apihelp-query+compass-summary": "Obtenga una lista de wikis de una granja de wiki de CreateWiki.",
+	"randomwiki": "Redirigir a una wiki al azar",
+	"randomwiki-header": "Elija una categoría y un idioma a continuación y, al enviarlo, se le redirigirá a un wiki aleatorio que cumpla los criterios seleccionados.",
+	"randomwiki-parameters": "Seleccionar parámetros",
+	"compass": "Descubrir wikis",
+	"compass-desc": "Permite [[Special:Compass|descubrir wikis]] de un servicio de alojamiento a través de [[Special:CreateWiki|CreateWiki]].",
+	"compass-header": "Seleccione parámetros para tu busqueda",
+	"compass-header-info": "Puede buscar wikis en esta wikigranja seleccionando parámetros como el idioma y otros.",
+	"compass-label-active": "Activo",
+	"compass-label-any": "(cualquier)",
+	"compass-label-closed": "Cerrado",
+	"compass-label-deleted": "Borrado",
+	"compass-label-inactive": "Inactivo",
+	"compass-label-locked": "Bloqueado",
+	"compass-label-open": "Abierto",
+	"compass-label-private": "Privado",
+	"compass-label-public": "Público",
+	"compass-table-category": "Categoría",
+	"compass-table-description": "Descripción",
+	"compass-table-established": "Establecido",
+	"compass-table-language": "Idioma",
+	"compass-table-state": "Estado o provincia",
+	"compass-table-visibility": "Visibilidad",
+	"compass-table-wiki": "Nombre de la wiki"
+}

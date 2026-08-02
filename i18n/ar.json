@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Meno25",
+			"ديفيد",
+			"محمد أحمد عبد الفتاح"
+		]
+	},
+	"apihelp-query+compass-example": "عرض جميع الويكيات في النموذج.",
+	"apihelp-query+compass-param-category": "تصفية حسب الفئة المحددة بواسطة CreateWiki لـ wiki.",
+	"apihelp-query+compass-param-customurl": "قم بالتصفية حسب ما إذا كانت الويكي تحتوي على عنوان URL مخصص تم تعريفه بواسطة CreateWiki.",
+	"apihelp-query+compass-param-language": "تصفية حسب رمز اللغة المحدد بواسطة CreateWiki لـ wiki.",
+	"apihelp-query+compass-param-limit": "أقصى عدد من النتائج لإظهارها.",
+	"apihelp-query+compass-param-prop": "معلومات للعودة عن ويكي محددة.",
+	"apihelp-query+compass-param-state": "قم بالتصفية حسب حالة إنشاء الويكي المعرفة للويكي.",
+	"apihelp-query+compass-param-wikis": "احصل على قائمة من الويكيات المحددة.",
+	"apihelp-query+compass-summary": "الحصول على قائمة الويكيات في مزرعة الويكي إنشاء ويكي.",
+	"randomwiki": "إعادة التوجيه إلى ويكي عشوائي",
+	"randomwiki-header": "اختر الفئة واللغة أدناه وعند الإرسال، سيتم إعادة توجيهك إلى ويكي عشوائي يلبي المعايير المحددة.",
+	"randomwiki-parameters": "حدد المعلمات",
+	"compass": "اكتشف الويكيات",
+	"compass-desc": "يسمح [[Special:Compass|باكتشاف ويكيات]] في مزرعة ويكي مع [[Special:CreateWiki|إنشاء ويكي]].",
+	"compass-header": "اختر المعلمات الخاصة ببحثك",
+	"compass-header-info": "يمكنك البحث عن الويكيات عبر هذه المزرعة عن طريق تحديد معلمات مثل اللغة والمزيد.",
+	"compass-label-active": "نشيط",
+	"compass-label-any": "(أي)",
+	"compass-label-closed": "مغلق",
+	"compass-label-deleted": "تم الحذف",
+	"compass-label-description": "وصف مختصر",
+	"compass-label-inactive": "غير نشط",
+	"compass-label-locked": "مغلق",
+	"compass-label-open": "مفتوح",
+	"compass-label-private": "خاص",
+	"compass-label-public": "علني",
+	"compass-table-category": "التصنيف",
+	"compass-table-description": "الوصف",
+	"compass-table-established": "أنشئت",
+	"compass-table-language": "اللغة",
+	"compass-table-state": "الحالة",
+	"compass-table-visibility": "الرؤية",
+	"compass-table-wiki": "اسم الويكي"
+}

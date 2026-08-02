@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Danvintius Bookix",
+			"IJzeren Jan"
+		]
+	},
+	"apihelp-query+compass-example": "Pokazati vse viki na formularu.",
+	"compass": "Izsledovati viki",
+	"compass-label-active": "Aktivna",
+	"compass-label-any": "(vsako)",
+	"compass-label-closed": "Zatvorjeno",
+	"compass-label-deleted": "Odstranjena",
+	"compass-label-description": "Kratky opis",
+	"compass-label-inactive": "Neaktivna",
+	"compass-label-open": "Otvorjeno",
+	"compass-label-private": "Privatna",
+	"compass-label-public": "Občedostupna",
+	"compass-table-category": "Kategorija",
+	"compass-table-description": "Opis",
+	"compass-table-language": "Jezyk",
+	"compass-table-state": "Stanje",
+	"compass-table-wiki": "Ime viki"
+}

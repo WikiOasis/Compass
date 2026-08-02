@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hamilton Abreu"
+		]
+	},
+	"apihelp-query+compass-example": "Mostrar todas as wikis no sítio.",
+	"apihelp-query+compass-param-limit": "O número máximo de resultados a serem mostrados.",
+	"apihelp-query+compass-param-prop": "A informação a devolver sobre uma wiki definida.",
+	"apihelp-query+compass-param-state": "Filtrar pelo estado de uma wiki definido por CriarWiki.",
+	"apihelp-query+compass-summary": "Obter uma lista das wikis num sítio de alojamento de wikis CriarWiki.",
+	"randomwiki": "Wiki aleatória",
+	"randomwiki-header": "Selecione uma categoria e uma língua abaixo e ao enviar será redirecionado para uma wiki aleatória que preenche os critérios selecionados!",
+	"compass": "WikiDescoberta",
+	"compass-desc": "Permite [[Special:Compass|descobrir wikis]] num sítio de alojamento de wikis com [[Special:CreateWiki|CriarWiki]].",
+	"compass-table-category": "Categoria",
+	"compass-table-description": "Descrição",
+	"compass-table-established": "Estabelecido",
+	"compass-table-language": "Língua",
+	"compass-table-state": "Estado",
+	"compass-table-visibility": "Visibilidade",
+	"compass-table-wiki": "Nome da wiki"
+}

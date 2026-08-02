@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"apihelp-query+compass-example": "Prikaži vse vikije farme.",
+	"apihelp-query+compass-param-category": "Filtriranje po kategoriji vikija, ki jo definira CreateWiki.",
+	"apihelp-query+compass-param-customurl": "Filtriranje po tem, ali ima viki URL po meri, ki ga določa CreateWiki.",
+	"apihelp-query+compass-param-language": "Filtriranje po jezikovni kodi vikija, ki jo definira CreateWiki.",
+	"apihelp-query+compass-param-limit": "Največje število prikazanih zadetkov.",
+	"apihelp-query+compass-param-prop": "Informacije o določenem vikiju za vrnitev.",
+	"apihelp-query+compass-param-state": "Filtrira po stanju vikija, določenem s CreateWiki.",
+	"apihelp-query+compass-param-wikis": "Pridobite seznam določenih vikijev.",
+	"apihelp-query+compass-summary": "Pridobite seznam vikijev v vikifarmi CreateWiki.",
+	"randomwiki": "Preusmeritev na naključni viki",
+	"randomwiki-header": "Spodaj izberite kategorijo in jezik in ob predložitvi boste preusmerjeni na naključen viki, ki izpolnjuje izbrana merila.",
+	"randomwiki-parameters": "Izberite parametre",
+	"compass": "Odkrijte vikije",
+	"compass-desc": "Omogoča [[Special:Compass|odkrivanje vikijev]] v vikifarmi z možnostjo [[Special:CreateWiki|CreateWiki]].",
+	"compass-header": "Izberite parametre za iskanje",
+	"compass-header-info": "Vikije v tej farmi lahko iščete tako, da izberete parametre, kot so jezik in drugo.",
+	"compass-label-active": "Aktiven",
+	"compass-label-any": "(kateri koli)",
+	"compass-label-closed": "Zaprt",
+	"compass-label-deleted": "Izbrisan",
+	"compass-label-description": "Kratek opis",
+	"compass-label-inactive": "Neaktiven",
+	"compass-label-locked": "Zaklenjen",
+	"compass-label-open": "Odprt",
+	"compass-label-private": "Zaseben",
+	"compass-label-public": "Javen",
+	"compass-table-category": "Kategorija",
+	"compass-table-description": "Opis",
+	"compass-table-established": "Ustanovljeno",
+	"compass-table-language": "Jezik",
+	"compass-table-state": "Status",
+	"compass-table-visibility": "Vidnost",
+	"compass-table-wiki": "Ime vikija"
+}

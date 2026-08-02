@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cevioch"
+		]
+	},
+	"compass-label-closed": "Заперти",
+	"compass-label-deleted": "Змазаный",
+	"compass-label-description": "Куртый опис",
+	"compass-label-inactive": "Неактивный",
+	"compass-label-locked": "Замкнуто",
+	"compass-label-open": "Одкрытый",
+	"compass-label-private": "Пріватный",
+	"compass-label-public": "Публічный",
+	"compass-table-category": "Катеґорія",
+	"compass-table-description": "Попис",
+	"compass-table-established": "Установленый",
+	"compass-table-language": "Язык",
+	"compass-table-state": "Штат",
+	"compass-table-visibility": "Видительность",
+	"compass-table-wiki": "Назва вікы"
+}

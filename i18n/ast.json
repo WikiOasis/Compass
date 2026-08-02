@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Xuacu"
+		]
+	},
+	"apihelp-query+compass-example": "Amosar toles wikis del formulariu.",
+	"apihelp-query+compass-param-limit": "Númberu máximu de resultancies a amosar.",
+	"apihelp-query+compass-param-prop": "Información a devolver sobro una wiki definida.",
+	"apihelp-query+compass-param-state": "Filtriar pol estáu CreateWiki definíu d'una wiki.",
+	"apihelp-query+compass-summary": "Llograr una llista de les wikis d'una granxa de wikis CreateWiki.",
+	"randomwiki": "Wiki al debalu",
+	"randomwiki-header": "Escueye más abaxo una categoría y un idioma y vamos redirixite al debalu a una wiki que cumpla colos criterios seleicionaos.",
+	"compass": "Compass",
+	"compass-desc": "Permite [[Special:Compass|descubrir wikis]] d'una granxa wiki con [[Special:CreateWiki|CreateWiki]].",
+	"compass-table-category": "Categoría",
+	"compass-table-language": "Llingua",
+	"compass-table-state": "Actividá",
+	"compass-table-visibility": "Visibilidá",
+	"compass-table-wiki": "Nome de la wiki"
+}

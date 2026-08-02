@@ -1,0 +1,43 @@
+{
+	"@metadata": {
+		"authors": [
+			"Justman10000",
+			"Metalhead64",
+			"PretzelRocky",
+			"TomatoCake"
+		]
+	},
+	"apihelp-query+compass-example": "Zeigt alle Wikis auf der Farm an.",
+	"apihelp-query+compass-param-category": "Filtert nach der durch CreateWiki definierten Kategorie eines Wikis.",
+	"apihelp-query+compass-param-customurl": "Filtert danach, ob das Wiki eine in CreateWiki definierte eigene URL hat.",
+	"apihelp-query+compass-param-language": "Filtert nach dem CreateWiki-definierten Sprachcode eines Wikis.",
+	"apihelp-query+compass-param-limit": "Maximale Anzahl der anzuzeigenden Ergebnisse.",
+	"apihelp-query+compass-param-prop": "Zurückzugebende Informationen über ein angegebenes Wiki.",
+	"apihelp-query+compass-param-state": "Filtert nach dem CreateWiki-definierten Status eines Wikis.",
+	"apihelp-query+compass-param-wikis": "Rufe eine Liste bestimmter Wikis ab.",
+	"apihelp-query+compass-summary": "Ruft eine Liste der Wikis auf einer CreateWiki-Wikifarm ab.",
+	"randomwiki": "Weiterleitung zu einem zufälligen Wiki",
+	"randomwiki-header": "Wähle unten eine Kategorie und eine Sprache aus. Nach der Anmeldung wirst du zu einem zufälligen Wiki weitergeleitet, das die ausgewählten Kriterien erfüllt.",
+	"randomwiki-parameters": "Parameter auswählen",
+	"compass": "Entdecke Wikis",
+	"compass-desc": "Ermöglicht das [[Special:Compass|Erkunden von Wikis]] auf einer Wikifarm mit [[Special:CreateWiki|Wikis erstellen]].",
+	"compass-header": "Wähle Parameter für deine Suche",
+	"compass-header-info": "Du kannst in dieser Farm nach Wikis suchen, indem du Parameter wie Sprache und mehr auswählst.",
+	"compass-label-active": "Aktiv",
+	"compass-label-any": "(beliebig)",
+	"compass-label-closed": "Geschlossen",
+	"compass-label-deleted": "Gelöscht",
+	"compass-label-description": "Kurze Beschreibung",
+	"compass-label-inactive": "Inaktiv",
+	"compass-label-locked": "Gesperrt",
+	"compass-label-open": "Offen",
+	"compass-label-private": "Privat",
+	"compass-label-public": "Öffentlich",
+	"compass-table-category": "Kategorie",
+	"compass-table-description": "Beschreibung",
+	"compass-table-established": "Gegründet",
+	"compass-table-language": "Sprache",
+	"compass-table-state": "Status",
+	"compass-table-visibility": "Sichtbarkeit",
+	"compass-table-wiki": "Name des Wikis"
+}

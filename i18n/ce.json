@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"apihelp-query+compass-example": "Массо а вики форма тӀехь гайта.",
+	"apihelp-query+compass-param-category": "Билгалйаьккхинчу CreateWiki вики-категорешца фильтраци.",
+	"apihelp-query+compass-param-customurl": "Фильтр йе нагахь санна вики чохь CreateWiki билгалдаьккхина леррина URL-адрес делахь.",
+	"apihelp-query+compass-param-language": "Билгалйаьккхинчу CreateWiki викин меттан кодца фильтраци.",
+	"apihelp-query+compass-param-limit": "Максимум гайта дезаш долу жамӀаш.",
+	"apihelp-query+compass-param-prop": "Дехьайаьккхинчу виких лаьцна йухайерзо йеза информаци.",
+	"apihelp-query+compass-param-state": "ХӀоттийначу CreateWiki-ца викин статусца фильтр йе.",
+	"apihelp-query+compass-param-wikis": "Къаьсттина викийн могӀам схьаэца.",
+	"apihelp-query+compass-summary": "CreateWiki вики-фермера вики могӀам схьаэца.",
+	"randomwiki": "Лаамаза вики-проекте дӀахьажор",
+	"randomwiki-header": "Бухахь категори а, мотт а схьахаржа, ахь дӀайахьитича хьо ларамаза дӀахьажо хьан критерешца йогӀучу вики чу.",
+	"randomwiki-parameters": "Харжа параметраш",
+	"compass": "Вики лехар",
+	"compass-desc": "Таро ло [[Special:Compass|викиш каро]] вики-ферман вики тӀехь [[Special:CreateWiki|CreateWiki]] лелош.",
+	"compass-header": "Хьайн лехамна параметраш схьахаржа",
+	"compass-header-info": "Хьан йиш йу оцу йерриг а фермехь викиш леха, параметраш къастош, масала, мотт, и.дӀ.кх.а.",
+	"compass-label-active": "Жигара",
+	"compass-label-any": "(муьлхха а)",
+	"compass-label-closed": "ДӀачӀагӀа",
+	"compass-label-deleted": "ДӀайаьккхина",
+	"compass-label-description": "Боца хаам",
+	"compass-label-inactive": "Жигара доцуш",
+	"compass-label-locked": "Блоктоьхна",
+	"compass-label-open": "Йиллина",
+	"compass-label-private": "Къайла",
+	"compass-label-public": "Массарна",
+	"compass-table-category": "Категори",
+	"compass-table-description": "Цуьнах лаьцна",
+	"compass-table-established": "ДӀахӀоттийна",
+	"compass-table-language": "Мотт",
+	"compass-table-state": "Статус",
+	"compass-table-visibility": "Гуш хилар",
+	"compass-table-wiki": "Викин цӀе"
+}

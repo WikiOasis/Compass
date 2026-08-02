@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"MITO",
+			"Moj",
+			"Nike",
+			"Pyscowicz"
+		]
+	},
+	"randomwiki": "Ohjaa satunnaiseen wikiin",
+	"compass": "Tutustu wikeihin",
+	"compass-table-category": "Luokka",
+	"compass-table-description": "Kuvaus",
+	"compass-table-established": "Perustettu",
+	"compass-table-language": "Kieli",
+	"compass-table-state": "Tila",
+	"compass-table-visibility": "Näkyvyys",
+	"compass-table-wiki": "Wikin nimi"
+}

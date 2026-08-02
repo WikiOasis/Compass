@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Patsagorn Y."
+		]
+	},
+	"apihelp-query+compass-example": "แสดงวิกิทั้งหมดบนฟาร์ม",
+	"apihelp-query+compass-param-limit": "จำนวนการตอบกลับสูงสุดที่จะแสดง",
+	"apihelp-query+compass-param-prop": "ข้อมูลที่ส่งคืนเกี่ยวกับวิกิที่กำหนด",
+	"apihelp-query+compass-param-state": "กรองตามสถานะของวิกิที่กำหนดโดย CreateWiki",
+	"apihelp-query+compass-summary": "ดูรายชื่อวิกิบนวิกิฟาร์มที่มี CreateWiki",
+	"randomwiki": "สุ่มวิกิ",
+	"randomwiki-header": "เลือกหมวดหมู่และภาษาด้านล่าง และเมื่อส่ง คุณจะถูกนำไปยังวิกิแบบสุ่มซึ่งตรงตามเกณฑ์ที่เลือก",
+	"compass": "สำรวจวิกิ",
+	"compass-desc": "อนุญาตให้[[Special:Compass|ค้นพบวิกิ]] บนฟาร์มวิกิที่มี [[Special:CreateWiki|CreateWiki]]",
+	"compass-table-category": "หมวดหมู่",
+	"compass-table-description": "คำอธิบาย",
+	"compass-table-established": "ก่อตั้งเมื่อ",
+	"compass-table-language": "ภาษา",
+	"compass-table-state": "สถานะ",
+	"compass-table-visibility": "การมองเห็น",
+	"compass-table-wiki": "ชื่อวิกิ"
+}

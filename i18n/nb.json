@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Citadell",
+			"EdoAug",
+			"Imre Eilertsen",
+			"Jon Harald Søby"
+		]
+	},
+	"apihelp-query+compass-example": "Vis alle wikier med formen.",
+	"apihelp-query+compass-param-limit": "Maksimalt antall resultater som skal vises.",
+	"apihelp-query+compass-param-prop": "Informasjon som skal returneres om en definert wiki.",
+	"apihelp-query+compass-param-state": "Filtrer etter den CreateWiki-definerte statusen til en wiki.",
+	"apihelp-query+compass-summary": "Hent en liste over wikier på en CreateWiki-wikifarm.",
+	"randomwiki": "Tilfeldig wiki",
+	"randomwiki-header": "Velg en kategori og et språk nedenfor, så blir du automatisk omdirigert til en tilfeldig wiki som imøtekommer de valgte kriteriene.",
+	"compass": "Wikioppdager",
+	"compass-desc": "Gjør det mulig å [[Special:Compass|oppdage wikier]] på en wikifarm med [[Special:CreateWiki|CreateWiki]].",
+	"compass-header-info": "Du kan søke etter wikier på tvers av denne farmen ved å velge parametre som språk og mer.",
+	"compass-table-category": "Kategori",
+	"compass-table-language": "Språk",
+	"compass-table-state": "Status",
+	"compass-table-visibility": "Synlighet",
+	"compass-table-wiki": "Wikiens navn"
+}

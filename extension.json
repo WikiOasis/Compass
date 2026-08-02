@@ -1,0 +1,161 @@
+{
+	"name": "Compass",
+	"author": [
+		"John Lewis",
+		"Universal Omega",
+		"Agent Isai"
+	],
+	"url": "https://github.com/WikiOasis/Compass",
+	"descriptionmsg": "compass-desc",
+	"namemsg": "compass-extensionname",
+	"license-name": "GPL-3.0-or-later",
+	"type": "specialpage",
+	"requires": {
+		"MediaWiki": ">= 1.43.0",
+		"extensions": {
+			"CreateWiki": "*"
+		},
+		"platform": {
+			"php": ">= 8.1"
+		}
+	},
+	"AvailableRights": [
+		"compass-curate"
+	],
+	"SpecialPages": {
+		"Compass": {
+			"class": "WikiOasis\\Compass\\Specials\\SpecialCompass",
+			"services": [
+				"CompassStore",
+				"CreateWikiValidator",
+				"LanguageNameUtils"
+			]
+		},
+		"CompassCurate": {
+			"class": "WikiOasis\\Compass\\Specials\\SpecialCompassCurate",
+			"services": [
+				"CompassStore"
+			]
+		},
+		"RandomWiki": {
+			"class": "WikiOasis\\Compass\\Specials\\SpecialRandomWiki",
+			"services": [
+				"CreateWikiDatabaseUtils",
+				"CreateWikiValidator"
+			]
+		}
+	},
+	"APIListModules": {
+		"compass": {
+			"class": "WikiOasis\\Compass\\Api\\ApiQueryCompass",
+			"services": [
+				"CreateWikiDatabaseUtils",
+				"CreateWikiValidator",
+				"LanguageNameUtils",
+				"RemoteWikiFactory"
+			]
+		}
+	},
+	"MessagesDirs": {
+		"Compass": [
+			"i18n"
+		]
+	},
+	"ExtensionMessagesFiles": {
+		"CompassAliases": "CompassAliases.php",
+		"CompassMagic": "CompassMagic.php"
+	},
+	"AutoloadNamespaces": {
+		"WikiOasis\\Compass\\": "includes/"
+	},
+	"TestAutoloadNamespaces": {
+		"WikiOasis\\Compass\\Tests\\": "tests/phpunit/"
+	},
+	"ServiceWiringFiles": [
+		"includes/ServiceWiring.php"
+	],
+	"ResourceFileModulePaths": {
+		"localBasePath": "resources",
+		"remoteExtPath": "Compass/resources"
+	},
+	"ResourceModules": {
+		"ext.compass.styles": {
+			"styles": [
+				"ext.compass.styles.less"
+			],
+			"dependencies": [
+				"codex-styles"
+			]
+		}
+	},
+	"Hooks": {
+		"GetMagicVariableIDs": {
+			"handler": "Main"
+		},
+		"LoadExtensionSchemaUpdates": {
+			"handler": "Installer"
+		},
+		"ManageWikiCoreAddFormFields": {
+			"handler": "ManageWiki"
+		},
+		"ManageWikiCoreFormSubmission": {
+			"handler": "ManageWiki"
+		},
+		"ParserFirstCallInit": {
+			"handler": "Main"
+		},
+		"ParserGetVariableValueSwitch": {
+			"handler": "Main"
+		}
+	},
+	"HookHandlers": {
+		"Installer": {
+			"class": "WikiOasis\\Compass\\HookHandlers\\Installer"
+		},
+		"Main": {
+			"class": "WikiOasis\\Compass\\HookHandlers\\Main",
+			"services": [
+				"CreateWikiDatabaseUtils",
+				"MainConfig"
+			]
+		},
+		"ManageWiki": {
+			"class": "WikiOasis\\Compass\\HookHandlers\\ManageWiki",
+			"services": [
+				"CompassStore",
+				"MainConfig"
+			]
+		}
+	},
+	"config": {
+		"CompassDefaultVisibility": {
+			"description": "Boolean. Whether wikis that have not yet made a choice are listed on Special:Compass.",
+			"value": true
+		},
+		"CompassDescriptionsMaxLength": {
+			"description": "Integer. The maximum length of the short wiki description.",
+			"value": 512
+		},
+		"CompassExtendedDescriptionsMaxLength": {
+			"description": "Integer. The maximum length of the extended wiki description.",
+			"value": 4096
+		},
+		"CompassListPrivateWikis": {
+			"description": "Boolean. Whether to show private wikis on Special:Compass.",
+			"value": true
+		},
+		"CompassMaxHighlightedWikis": {
+			"description": "Integer. The maximum number of wikis that can be highlighted on Special:Compass.",
+			"value": 6
+		},
+		"CompassUseDescriptions": {
+			"description": "Boolean. Whether to enable wiki descriptions.",
+			"value": true
+		},
+		"CompassWikisPerPage": {
+			"description": "Integer. The number of wikis listed per page on Special:Compass.",
+			"value": 20
+		}
+	},
+	"manifest_version": 2
+}

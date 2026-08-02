@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby",
+			"Volvox"
+		]
+	},
+	"apihelp-query+compass-example": "All Wikien am Formulaire weisen.",
+	"apihelp-query+compass-param-limit": "Maximal Zuel vun de Resultater déi gewise ginn",
+	"randomwiki": "Op eng zoufälleg Wiki viruleeden",
+	"compass": "Wikien entdecken",
+	"compass-label-active": "Aktiv",
+	"compass-label-any": "(all)",
+	"compass-label-closed": "Zou",
+	"compass-label-deleted": "Geläscht",
+	"compass-label-description": "Kuerzbeschreiwung",
+	"compass-label-inactive": "Inaktiv",
+	"compass-label-locked": "Gespaart",
+	"compass-label-open": "Op",
+	"compass-label-private": "Privat",
+	"compass-label-public": "Ëffentlech",
+	"compass-table-category": "Kategorie",
+	"compass-table-description": "Beschreiwung",
+	"compass-table-language": "Sprooch",
+	"compass-table-state": "Status",
+	"compass-table-visibility": "Visibilitéit",
+	"compass-table-wiki": "Numm vun der Wiki"
+}

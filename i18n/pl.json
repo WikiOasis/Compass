@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chrumps",
+			"Rail",
+			"Railfail536",
+			"Woytecr"
+		]
+	},
+	"apihelp-query+compass-example": "Wyświetl wszystkie wiki w formularzu.",
+	"apihelp-query+compass-param-limit": "Maksymalna liczba wyników do pokazania.",
+	"apihelp-query+compass-summary": "Pobierz listę wiki na farmie z rozszerzeniem CreateWiki.",
+	"randomwiki": "Losowa wiki",
+	"randomwiki-header": "Poniżej wybierz kategorię i język wiki, a zostaniesz bezpośrednio przekierowany do losowej wiki spełniającej podane wymagania!",
+	"compass": "Odkrywaj wiki",
+	"compass-desc": "Umożliwia [[Special:Compass|odkrywanie wiki]] na farmie z rozszerzeniem [[Special:CreateWiki|CreateWiki]].",
+	"compass-table-category": "Kategoria",
+	"compass-table-language": "Język",
+	"compass-table-state": "Status",
+	"compass-table-visibility": "Widoczność",
+	"compass-table-wiki": "Nazwa wiki"
+}

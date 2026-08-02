@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"apihelp-query+compass-example": "Monstrar tote le wikis del formulario.",
+	"apihelp-query+compass-param-category": "Filtrar per le categoria de un wiki definite per CreaWiki.",
+	"apihelp-query+compass-param-customurl": "Filtrar per si le wiki ha un URL personalisate definite per CreaWiki.",
+	"apihelp-query+compass-param-language": "Filtrar per le codice de lingua de un wiki definite per CreaWiki.",
+	"apihelp-query+compass-param-limit": "Numero maxime de resultatos a monstrar.",
+	"apihelp-query+compass-param-prop": "Information a restituer sur un wiki definite.",
+	"apihelp-query+compass-param-state": "Filtrar per le stato de un wiki definite per CreaWiki.",
+	"apihelp-query+compass-param-wikis": "Obtener un lista de wikis specific.",
+	"apihelp-query+compass-summary": "Obtener un lista de wikis sur un ferma de wikis CreaWiki.",
+	"randomwiki": "Redirection a un wiki aleatori",
+	"randomwiki-header": "Elige un categoria e un lingua hic infra e, post invio, tu essera redirigite a un wiki aleatori que satisface le criterios seligite.",
+	"randomwiki-parameters": "Selige parametros",
+	"compass": "Discoperir wikis",
+	"compass-desc": "Permitte [[Special:Compass|discoperir wikis]] sur un ferma de wikis con [[Special:CreateWiki|CreaWiki]].",
+	"compass-header": "Elige le parametros pro le recerca",
+	"compass-header-info": "Es possibile cercar wikis in tote iste ferma seligente parametros como le lingua e alteres.",
+	"compass-label-active": "Active",
+	"compass-label-any": "(qualcunque)",
+	"compass-label-closed": "Claudite",
+	"compass-label-deleted": "Delite",
+	"compass-label-description": "Curte description",
+	"compass-label-inactive": "Inactive",
+	"compass-label-locked": "Serrate",
+	"compass-label-open": "Aperte",
+	"compass-label-private": "Private",
+	"compass-label-public": "Public",
+	"compass-table-category": "Categoria",
+	"compass-table-description": "Description",
+	"compass-table-established": "Establite",
+	"compass-table-language": "Lingua",
+	"compass-table-state": "Stato",
+	"compass-table-visibility": "Visibilitate",
+	"compass-table-wiki": "Nomine del wiki"
+}

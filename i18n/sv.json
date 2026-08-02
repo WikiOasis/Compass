@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Sabelöga",
+			"Stefan2255",
+			"WikiPhoenix"
+		]
+	},
+	"apihelp-query+compass-example": "Visa alla wikier i formuläret.",
+	"apihelp-query+compass-param-limit": "Maximalt antal resultat att visa.",
+	"apihelp-query+compass-param-prop": "Information att returnera om en definierad wiki.",
+	"apihelp-query+compass-param-state": "Filtrera efter en wikis CreateWiki-definierade tillstånd.",
+	"apihelp-query+compass-summary": "Hämta en lista över wikier på en CreateWiki-wikifarm.",
+	"randomwiki": "Omdirigera till en slumpmässig wiki",
+	"randomwiki-header": "Välj en kategori och ett språk nedan, och när du skickar in ditt bidrag kommer du att omdirigeras till en slumpmässig wiki som uppfyller de valda kriterierna.",
+	"compass": "Upptäck wikier",
+	"compass-desc": "Gör det möjligt att [[Special:Compass|upptäcka wikier]] på en wikifarm med [[Special:CreateWiki|CreateWiki]].",
+	"compass-table-category": "Kategori",
+	"compass-table-description": "Beskrivning",
+	"compass-table-established": "Etablerad",
+	"compass-table-language": "Språk",
+	"compass-table-state": "Tillstånd",
+	"compass-table-visibility": "Synlighet",
+	"compass-table-wiki": "Wikinamn"
+}

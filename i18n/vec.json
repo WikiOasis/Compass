@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cusolotto"
+		]
+	},
+	"apihelp-query+compass-param-limit": "Numaro masimo de risultati da vardar.",
+	"compass-table-category": "Categoria",
+	"compass-table-language": "Lengua",
+	"compass-table-state": "Atività",
+	"compass-table-visibility": "Visibilità",
+	"compass-table-wiki": "Nome Wiki"
+}

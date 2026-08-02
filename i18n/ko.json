@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tensama0415",
+			"Ykhwong",
+			"렌즈"
+		]
+	},
+	"apihelp-query+compass-example": "양식에 모든 위키를 표시합니다.",
+	"apihelp-query+compass-param-category": "CreateWiki에서 정의한 위키 분류로 필터링합니다",
+	"apihelp-query+compass-param-customurl": "위키에 CreateWiki로 정의된 사용자 지정 URL이 있는지 여부로 필터링합니다.",
+	"apihelp-query+compass-param-language": "CreateWiki에서 정의한 언어 코드로 필터링합니다.",
+	"apihelp-query+compass-param-limit": "표시할 결과의 최대 수입니다.",
+	"apihelp-query+compass-param-prop": "정의된 위키에 관해 반환할 정보입니다.",
+	"apihelp-query+compass-param-state": "CreateWiki에서 정의한 위키의 상태로 필터링합니다.",
+	"apihelp-query+compass-param-wikis": "특정 위키 목록을 가져옵니다.",
+	"apihelp-query+compass-summary": "CreateWiki 위키팜에서 위키 목록을 가져옵니다.",
+	"randomwiki": "임의의 위키로 넘겨주기",
+	"randomwiki-header": "아래에서 분류와 언어를 선택하세요. 제출 후, 선택하신 기준에 맞는 임의의 위키 분류로 이동합니다.",
+	"randomwiki-parameters": "매개변수 선택",
+	"compass": "위키 발견",
+	"compass-desc": "위키 팜에서 [[Special:CreateWiki|CreateWiki]]를 사용한 [[Special:Compass|위키 발견]]을 허용합니다.",
+	"compass-header": "검색 매개변수를 선택하세요",
+	"compass-header-info": "언어 등의 매개변수를 선택하여 이 팜 전체의 위키를 검색할 수 있습니다.",
+	"compass-label-active": "활성",
+	"compass-label-any": "(모두)",
+	"compass-label-closed": "닫힘",
+	"compass-label-deleted": "삭제됨",
+	"compass-label-description": "짧은 설명",
+	"compass-label-inactive": "비활성",
+	"compass-label-locked": "잠김",
+	"compass-label-open": "열림",
+	"compass-label-private": "비공개",
+	"compass-label-public": "공개",
+	"compass-table-category": "분류",
+	"compass-table-description": "설명",
+	"compass-table-established": "설립",
+	"compass-table-language": "언어",
+	"compass-table-state": "상태",
+	"compass-table-visibility": "공개 설정",
+	"compass-table-wiki": "위키 이름"
+}

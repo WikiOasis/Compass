@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"JeffreyKim",
+			"Yueman"
+		]
+	},
+	"apihelp-query+compass-example": "喺表格上面顯示晒所有維基。",
+	"apihelp-query+compass-param-category": "按建立維基定義嘅維基類別篩選。",
+	"apihelp-query+compass-param-customurl": "如果維基有 CreateWiki 定義嘅自訂網址，請過濾。",
+	"apihelp-query+compass-param-language": "用CreateWiki定義嘅維基語言代碼過濾。",
+	"apihelp-query+compass-param-limit": "要顯示嘅最多結果數量。",
+	"apihelp-query+compass-param-prop": "要返回嘅有關定義咗嘅維基嘅資料。",
+	"apihelp-query+compass-param-state": "按 CreateWiki 定義嘅維基狀態進行篩選。",
+	"apihelp-query+compass-param-wikis": "攞個特定維基嘅清單。",
+	"apihelp-query+compass-summary": "喺CreateWiki維基農場攞個維基清單。",
+	"randomwiki": "跳轉去隨機嘅維基",
+	"randomwiki-header": "喺下面揀一個類別同語言，提交嗰陣，你會重新導向去一個符合所選準則嘅隨機維基。",
+	"randomwiki-parameters": "揀參數",
+	"compass": "發掘維基",
+	"compass-desc": "允許[[Special:Compass|發現維基]]喺維基農場上面用[[Special:CreateWiki|創建維基]]。",
+	"compass-header": "揀你嘅搜尋參數",
+	"compass-header-info": "你可以透過揀語言等等嘅參數嚟搜尋呢個農場入面嘅維基。",
+	"compass-label-active": "活躍",
+	"compass-label-any": "（任何）",
+	"compass-label-closed": "閂咗",
+	"compass-label-deleted": "刪除咗",
+	"compass-label-description": "簡短嘅描述",
+	"compass-label-inactive": "閒置",
+	"compass-label-locked": "鎖咗",
+	"compass-label-open": "打開",
+	"compass-label-private": "私人",
+	"compass-label-public": "公開",
+	"compass-table-category": "類別",
+	"compass-table-description": "描述",
+	"compass-table-established": "建立咗",
+	"compass-table-language": "語言",
+	"compass-table-state": "陳述",
+	"compass-table-visibility": "可見度",
+	"compass-table-wiki": "維基名"
+}

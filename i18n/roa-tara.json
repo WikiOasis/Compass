@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joetaras"
+		]
+	},
+	"apihelp-query+compass-example": "Fà 'ndrucà tutte le uicchi sus a 'u module.",
+	"apihelp-query+compass-param-limit": "Numere massime de resultate da 'ndrucà.",
+	"apihelp-query+compass-param-prop": "'Mbormazione ca a turnà sus a 'na uicchi definite.",
+	"apihelp-query+compass-param-state": "Filtre pe 'nu state definite de CreateWiki de 'na uicchi.",
+	"apihelp-query+compass-summary": "Pigghie 'n'elenghe de uicchi sus a fabbreche de uicchi CreateWiki.",
+	"randomwiki": "Uicchi a uecchije",
+	"randomwiki-header": "Scacchie 'na cateogrije e 'na lènghe aqquà sotte e sus 'a conferme avìne mannate a uecchije sus a 'na uicchi ca s'accocchie cu 'u criterie de recerche scacchiate!",
+	"compass": "Scopre le uicchi",
+	"compass-desc": "Face [[Special:Compass|scuprì le uicchi]] sus a 'na uicchi fabbreche cu [[Special:CreateWiki|CreateWiki]].",
+	"compass-table-category": "Categorije",
+	"compass-table-description": "Descrizione",
+	"compass-table-established": "Stabbilite",
+	"compass-table-language": "Lènghe",
+	"compass-table-state": "State",
+	"compass-table-visibility": "Visibbiletà",
+	"compass-table-wiki": "Nome d'a uicchi"
+}

@@ -1,0 +1,148 @@
+@import 'mediawiki.skin.variables.less';
+
+.ext-compass {
+	display: flex;
+	flex-direction: column;
+	gap: @spacing-150;
+}
+
+.ext-compass-heading {
+	margin: 0 0 @spacing-75;
+	padding: 0;
+	border: 0;
+	font-size: @font-size-large;
+	font-weight: @font-weight-bold;
+}
+
+.ext-compass-filters {
+	padding: @spacing-100;
+	border: 1px solid @border-color-subtle;
+	border-radius: @border-radius-base;
+	background-color: @background-color-interactive-subtle;
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat( auto-fit, minmax( 14em, 1fr ) );
+		gap: @spacing-100;
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: @spacing-50;
+		margin-top: @spacing-100;
+	}
+
+	.cdx-select,
+	.cdx-text-input {
+		width: 100%;
+	}
+}
+
+.ext-compass-grid {
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( 18em, 1fr ) );
+	gap: @spacing-100;
+	align-items: start;
+}
+
+.ext-compass-card {
+	display: flex;
+	flex-direction: column;
+	gap: @spacing-50;
+
+	.cdx-card__text {
+		display: flex;
+		flex-direction: column;
+		gap: @spacing-25;
+	}
+
+	.cdx-card__text__supporting-text {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: @spacing-25;
+	}
+
+	.cdx-accordion {
+		margin-top: @spacing-25;
+	}
+
+	&--highlighted {
+		border-color: @border-color-progressive;
+		background-color: @background-color-progressive-subtle;
+	}
+
+	&__established {
+		color: @color-subtle;
+		font-size: @font-size-small;
+	}
+}
+
+.ext-compass-results {
+	&__count {
+		margin: 0 0 @spacing-75;
+		color: @color-subtle;
+	}
+}
+
+.ext-compass-pagination {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: @spacing-50;
+	margin-top: @spacing-100;
+}
+
+.ext-compass-curate {
+	&__actions {
+		margin-top: @spacing-100;
+	}
+
+	&__name {
+		display: block;
+		font-weight: @font-weight-bold;
+	}
+
+	&__dbname {
+		display: block;
+		color: @color-subtle;
+		font-size: @font-size-small;
+	}
+
+	&__order {
+		max-width: 6em;
+	}
+
+	&__help {
+		margin: @spacing-25 0 0;
+		color: @color-subtle;
+		font-size: @font-size-small;
+	}
+}
+
+.ext-compass-chip {
+	&--highlighted {
+		border-color: @border-color-progressive;
+		background-color: @background-color-progressive-subtle;
+		color: @color-progressive;
+	}
+
+	&--success {
+		border-color: @border-color-success;
+		background-color: @background-color-success-subtle;
+		color: @color-success;
+	}
+
+	&--warning {
+		border-color: @border-color-warning;
+		background-color: @background-color-warning-subtle;
+		color: @color-warning;
+	}
+
+	&--error {
+		border-color: @border-color-error;
+		background-color: @background-color-error-subtle;
+		color: @color-error;
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kranix",
+			"Saederup92",
+			"Zakawer2"
+		]
+	},
+	"apihelp-query+compass-example": "Vis alle wikier på formularen.",
+	"apihelp-query+compass-param-category": "Filtrer efter den kategori for en wiki som er defineret af CreateWiki.",
+	"apihelp-query+compass-param-customurl": "Filtrer efter om wikien har en brugerdefineret URL defineret af CreateWiki.",
+	"apihelp-query+compass-param-language": "Filtrer efter den sprogkode for en wiki som er defineret af CreateWiki.",
+	"apihelp-query+compass-param-limit": "Maksimalt antal resultater der skal vises.",
+	"apihelp-query+compass-param-prop": "Oplysninger der skal returneres om en defineret wiki.",
+	"apihelp-query+compass-param-state": "Filtrer efter den tilstand for en wiki som er defineret af CreateWiki.",
+	"apihelp-query+compass-param-wikis": "Få en liste over bestemte wikier.",
+	"apihelp-query+compass-summary": "Hent en liste over wikier på en CreateWiki-wikifarm.",
+	"randomwiki": "Omdiriger til en tilfældig wiki",
+	"randomwiki-header": "Vælg en kategori og et sprog nedenfor, og når du har indsendt din kommentar, vil du blive omdirigeret til en tilfældig wiki der opfylder de valgte kriterier.",
+	"randomwiki-parameters": "Vælg parametre",
+	"compass": "Opdag wikier",
+	"compass-desc": "Tillader [[Special:Compass|opdagelse af wikier]] på en wikifarm med [[Special:CreateWiki|CreateWiki]].",
+	"compass-header": "Vælg parametre til din søgning",
+	"compass-header-info": "Du kan søge efter wikier på tværs af denne farm ved at vælge parametre så som sprog og flere.",
+	"compass-label-active": "Aktiv",
+	"compass-label-any": "(enhver)",
+	"compass-label-closed": "Lukket",
+	"compass-label-deleted": "Slettet",
+	"compass-label-description": "Kort beskrivelse",
+	"compass-label-inactive": "Inaktiv",
+	"compass-label-locked": "Låst",
+	"compass-label-open": "Åben",
+	"compass-label-private": "Privat",
+	"compass-label-public": "Offentlig",
+	"compass-table-category": "Kategori",
+	"compass-table-description": "Beskrivelse",
+	"compass-table-established": "Etableret",
+	"compass-table-language": "Sprog",
+	"compass-table-state": "Status",
+	"compass-table-visibility": "Synlighed",
+	"compass-table-wiki": "Wikinavn"
+}

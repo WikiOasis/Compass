@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cabal"
+		]
+	},
+	"apihelp-query+compass-example": "ਪਰਚੇ ਉੱਤੇ ਸਾਰੀਆਂ ਵਿਕੀਆਂ ਵਿਖਾਓ।",
+	"randomwiki-parameters": "ਮਾਪਦੰਡ ਚੁਣੋ",
+	"compass": "ਵਿਕੀਆਂ ਦੀ ਖੋਜ ਕਰੋ",
+	"compass-label-active": "ਸਰਗਰਮ",
+	"compass-label-any": "(ਕੋਈ ਵੀ)",
+	"compass-label-closed": "ਬੰਦ ਕੀਤਾ ਗਿਆ",
+	"compass-label-deleted": "ਮਿਟਾਇਆ ਗਿਆ",
+	"compass-label-description": "ਛੋਟਾ ਵੇਰਵਾ",
+	"compass-label-locked": "ਤਾਲੇਬੰਦ",
+	"compass-label-open": "ਖੋਲ੍ਹੋ",
+	"compass-label-private": "ਨਿੱਜੀ",
+	"compass-table-category": "ਵੰਨਗੀਆਂ",
+	"compass-table-description": "ਵੇਰਵਾ",
+	"compass-table-language": "ਬੋਲੀ",
+	"compass-table-visibility": "ਦਿੱਸਣਯੋਗਤਾ",
+	"compass-table-wiki": "ਵਿਕੀ ਨਾਂ"
+}

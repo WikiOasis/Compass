@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ajeje Brazorf",
+			"Beta16",
+			"Executive",
+			"Lorem Ipsum",
+			"Ricordisamoa"
+		]
+	},
+	"apihelp-query+compass-example": "Mostra tutti gli wiki nel modulo.",
+	"apihelp-query+compass-param-limit": "Numero massimo di risultati da mostrare.",
+	"apihelp-query+compass-param-prop": "Informazione da restituire su una Wiki definita.",
+	"apihelp-query+compass-param-state": "Filtra in base ad uno stato definito da CreaWiki di una Wiki.",
+	"apihelp-query+compass-summary": "Ottieni una lista di wiki su una wikifarm CreateWiki.",
+	"randomwiki": "Reindirizzamento a un wiki casuale",
+	"randomwiki-header": "Scegli una categoria e una lingua di seguito e, dopo l'invio, verrai reindirizzato a un wiki casuale che soddisfa i criteri selezionati.",
+	"compass": "Scopri i wiki",
+	"compass-desc": "Consenti [[Special:Compass|scoprire wikis]] in un incubatore di Wiki con [[Special:CreateWiki|CreaWiki]].",
+	"compass-label-active": "Attivo",
+	"compass-label-any": "(qualsiasi)",
+	"compass-label-closed": "Chiuso",
+	"compass-label-deleted": "Cancellato",
+	"compass-label-inactive": "Inattivo",
+	"compass-label-locked": "Bloccato",
+	"compass-label-open": "Aperto",
+	"compass-label-private": "Privato",
+	"compass-label-public": "Pubblico",
+	"compass-table-category": "Categoria",
+	"compass-table-description": "Descrizione",
+	"compass-table-established": "Stabilito",
+	"compass-table-language": "Lingua",
+	"compass-table-state": "Stato",
+	"compass-table-visibility": "Visibilità",
+	"compass-table-wiki": "Nome wiki"
+}

@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"MercyDansanda"
+		]
+	},
+	"apihelp-query+compass-param-category": "Tace ta hanyar ƙirƙiraWiki ma'anar nau'in wiki.",
+	"apihelp-query+compass-param-customurl": "Tace idan wiki yana da URL na al'ada da aka ayyana Wiki",
+	"apihelp-query+compass-param-language": "Tace ta CreateWiki ma'anar lambar yare na wiki.",
+	"compass-label-active": "Mai aiki",
+	"compass-label-any": "(kowane)",
+	"compass-label-closed": "Rufe",
+	"compass-label-deleted": "Gogewa",
+	"compass-label-inactive": "Rashin aiki",
+	"compass-label-locked": "An kulle shi",
+	"compass-label-open": "Bude",
+	"compass-label-private": "Na sirri",
+	"compass-label-public": "Jama'a"
+}

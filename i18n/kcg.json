@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kambai Akau"
+		]
+	},
+	"compass-label-active": "A̱ nyian ta̱m",
+	"compass-label-any": "(kuzang)",
+	"compass-label-closed": "Á̱ nyim",
+	"compass-label-deleted": "Á̱ ti̱n",
+	"compass-label-inactive": "Nwai nta̱m",
+	"compass-label-locked": "Á̱ nyim",
+	"compass-label-open": "Khwuk",
+	"compass-label-private": "Kyang a̱bang",
+	"compass-label-public": "Á̱niet"
+}

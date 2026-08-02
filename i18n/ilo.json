@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lam-ang"
+		]
+	},
+	"apihelp-query+compass-example": "Ipakita amin dagiti wiki iti porma.",
+	"apihelp-query+compass-param-limit": "Kaaduan a bilang dagiti resulta a maipakita.",
+	"apihelp-query+compass-param-prop": "Maisubli a pakaammo a maipanggep iti naipalawag a wiki.",
+	"compass-table-category": "Kategoria",
+	"compass-table-language": "Pagsasao",
+	"compass-table-state": "Aktibidad",
+	"compass-table-visibility": "Pannakakita",
+	"compass-table-wiki": "Nagan ti Wiki"
+}

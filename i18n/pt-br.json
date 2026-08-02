@@ -1,0 +1,43 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bartomelow",
+			"Eduardo Addad de Oliveira",
+			"Eduardoaddad",
+			"YuriNikolai"
+		]
+	},
+	"apihelp-query+compass-example": "Mostrar todas as wikis no site.",
+	"apihelp-query+compass-param-category": "Filtrar pela categoria definida pelo CreateWiki de um wiki.",
+	"apihelp-query+compass-param-customurl": "Filtrar se o wiki tiver uma URL personalizada definida como CreateWiki.",
+	"apihelp-query+compass-param-language": "Filtrar pelo código de idioma definido pelo CreateWiki de um wiki.",
+	"apihelp-query+compass-param-limit": "O número máximo de resultados a serem mostrados.",
+	"apihelp-query+compass-param-prop": "Informações para retornar sobre um wiki definido.",
+	"apihelp-query+compass-param-state": "Filtrar pelo estado de uma wiki definido por CriarWiki.",
+	"apihelp-query+compass-param-wikis": "Obtenha uma lista de wikis específicos.",
+	"apihelp-query+compass-summary": "Obter uma lista das wikis num site de alojamento de wikis CriarWiki.",
+	"randomwiki": "Redirecionar a uma wiki aleatória",
+	"randomwiki-header": "Selecione uma categoria e um idioma abaixo e, após o envio, você será redirecionado para uma wiki aleatória que atenda aos critérios selecionados.",
+	"randomwiki-parameters": "Selecione os parâmetros",
+	"compass": "Descubra wikis",
+	"compass-desc": "Permite [[Special:Compass|descobrir wikis]] num site de alojamento de wikis com [[Special:CreateWiki|CriarWiki]].",
+	"compass-header": "Escolha os parâmetros para sua pesquisa",
+	"compass-header-info": "Você pode pesquisar wikis nesta \"farm\" selecionando parâmetros como idioma e outros.",
+	"compass-label-active": "Ativo",
+	"compass-label-any": "(qualquer)",
+	"compass-label-closed": "Fechado",
+	"compass-label-deleted": "Excluído",
+	"compass-label-description": "Descrição curta",
+	"compass-label-inactive": "Inativo",
+	"compass-label-locked": "Bloqueado",
+	"compass-label-open": "Aberto",
+	"compass-label-private": "Privado",
+	"compass-label-public": "Público",
+	"compass-table-category": "Categoria",
+	"compass-table-description": "Descrição",
+	"compass-table-established": "Estabelecido",
+	"compass-table-language": "Idioma",
+	"compass-table-state": "Estado",
+	"compass-table-visibility": "Visibilidade",
+	"compass-table-wiki": "Nome da wiki"
+}

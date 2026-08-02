@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Avatar6",
+			"DDPAT",
+			"Ice bulldog",
+			"Piramidion",
+			"Vlad5250",
+			"Ата"
+		]
+	},
+	"apihelp-query+compass-example": "Показати всі вікі в указаній формі.",
+	"apihelp-query+compass-param-limit": "Максимальна кількість результатів для показу.",
+	"apihelp-query+compass-param-prop": "Інформація, яку слід повернути про визначену вікі.",
+	"apihelp-query+compass-param-state": "Фільтрувати за станом вікі, визначеним через CreateWiki.",
+	"apihelp-query+compass-summary": "Отримати список вікі на вікі-фермі з CreateWiki.",
+	"randomwiki": "Переспрямувати на випадкову вікі",
+	"randomwiki-header": "Оберіть нижче категорію й мову, і після підтвердження вас буде перенаправлено на випадкову вікі, яка відповідає вибраним критеріям.",
+	"compass": "Відкрийте для себе вікі",
+	"compass-desc": "Дозволяє [[Special:Compass|виявляти вікі]] на вікі-фермі, яка має можливість [[Special:CreateWiki|створення вікі]].",
+	"compass-table-category": "Категорія",
+	"compass-table-description": "Опис",
+	"compass-table-established": "Встановлено",
+	"compass-table-language": "Мова",
+	"compass-table-state": "Стан",
+	"compass-table-visibility": "Видимість",
+	"compass-table-wiki": "Назва вікі"
+}

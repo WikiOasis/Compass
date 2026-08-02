@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"AhmedG612"
+		]
+	},
+	"apihelp-query+compass-example": "Muuji dhammaan wikiyada foomka",
+	"apihelp-query+compass-param-category": "Ku shaandhee qaybta wiki-ga ee ay qeexday Abuur Wiki.",
+	"apihelp-query+compass-param-customurl": "Ku shaandhee haddii wiki-gu leeyahay URL gaar ah oo ay qeexday Abuur Wiki.",
+	"apihelp-query+compass-param-language": "Ku shaandhee koodhka luqadda wiki-ga ee ay qeexday Abuur Wiki.",
+	"apihelp-query+compass-param-limit": "Tirada ugu badan ee natiijooyinka la muujinayo.",
+	"apihelp-query+compass-param-prop": "Macluumaadka laga soo celinayo wiki la qeexay.",
+	"apihelp-query+compass-param-state": "Ku shaandhee xaaladda wiki-ga ee ay qeexday Abuur Wiki.",
+	"apihelp-query+compass-param-wikis": "Hel liiska wikiyada gaar ah.",
+	"apihelp-query+compass-summary": "Hel liiska wikiyada ku jira wikifarm CreateWiki.",
+	"randomwiki": "Sii toosin aan kala sooc lahayn wiki",
+	"randomwiki-header": "Dooro qayb iyo luqad hoos ku qoran, marka la gudbiyana waxaa loo sii toosin doonaa wiki aan kala sooc lahayn oo buuxiya shuruudaha la doortay.",
+	"randomwiki-parameters": "Dooro cabbirrada",
+	"compass": "Soo hel wikiyada",
+	"compass-desc": "Waxay oggolaanaysaa [[Special:Compass|soo helidda wikiyada]] ku jira wikifarm leh [[Special:CreateWiki|CreateWiki]].",
+	"compass-header": "Dooro cabbirrada raadintaada",
+	"compass-header-info": "Waxaad ka raadin kartaa wikiyada ku baahsan farm-kan adiga oo dooranaya cabbirro sida luqadda iyo waxyaabo kale.",
+	"compass-label-active": "Firfircoon",
+	"compass-label-any": "(wax kasta)",
+	"compass-label-closed": "La xiray",
+	"compass-label-deleted": "Tirtiray",
+	"compass-label-description": "Sharaxaad gaaban",
+	"compass-label-inactive": "Aan firfircoonayn",
+	"compass-label-locked": "La qufulay",
+	"compass-label-open": "Fur",
+	"compass-label-private": "Gaar ah",
+	"compass-label-public": "Dadweyne",
+	"compass-table-category": "Qeybta",
+	"compass-table-description": "Sharaxaad",
+	"compass-table-established": "La aasaasay",
+	"compass-table-language": "Luuqada",
+	"compass-table-state": "Xaalada",
+	"compass-table-visibility": "Muuqaalka",
+	"compass-table-wiki": "Magaca wiki"
+}

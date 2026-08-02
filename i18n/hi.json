@@ -1,0 +1,38 @@
+{
+	"@metadata": {
+		"authors": [
+			"AnupamM",
+			"Magarw",
+			"Saurmandal"
+		]
+	},
+	"apihelp-query+compass-example": "फ़ॉर्म पर सभी विकियाँ दिखाएँ।",
+	"apihelp-query+compass-param-category": "विकि की CreateWiki पर परिभाषित श्रेणी के अनुसार छानें।",
+	"apihelp-query+compass-param-customurl": "विकि की CreateWiki पर परिभाषित अनुकूलित URL के अनुसार छानें।",
+	"apihelp-query+compass-param-language": "विकि की CreateWiki पर परिभाषित भाषा कोड के अनुसार छानें।",
+	"apihelp-query+compass-param-limit": "अधिकतम परिणाम संख्या।",
+	"apihelp-query+compass-param-prop": "परिभाषित विकि के बारे में लौटाने के लिए जानकारी।",
+	"apihelp-query+compass-param-state": "विकि की CreateWiki पर परिभाषित स्थिति के अनुसार छानें।",
+	"apihelp-query+compass-param-wikis": "विशिष्ट विकियों की सूची पाएँ।",
+	"apihelp-query+compass-summary": "किसी CreateWiki विकि-फ़ार्म पर विकियों की सूची पाएँ।",
+	"randomwiki": "बेतरतीब विकि पर अनुप्रेषित हों",
+	"compass-header": "अपने खोज के लिए पैरामीटर्स चुनें",
+	"compass-header-info": "आप भाषा आदि जैसे पैरामीटर्स चुनकर इस फ़ार्म पर विकियाँ खोज सकते हैं।",
+	"compass-label-active": "सक्रिय",
+	"compass-label-any": "(कोई भी)",
+	"compass-label-closed": "बंद किया गया",
+	"compass-label-deleted": "हटाया गया",
+	"compass-label-description": "लघु विवरण",
+	"compass-label-inactive": "असक्रिय",
+	"compass-label-locked": "लॉक किया हुआ",
+	"compass-label-open": "खुला",
+	"compass-label-private": "गोपनीय",
+	"compass-label-public": "सार्वजनिक",
+	"compass-table-category": "श्रेणी",
+	"compass-table-description": "विवरण",
+	"compass-table-established": "स्थापित",
+	"compass-table-language": "भाषा",
+	"compass-table-state": "स्थिति",
+	"compass-table-visibility": "दृश्यता",
+	"compass-table-wiki": "विकि का नाम"
+}

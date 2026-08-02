@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Aca",
+			"Vlad5250",
+			"Winston Sung"
+		]
+	},
+	"apihelp-query+compass-example": "Prikaži sve wikije na farmi.",
+	"apihelp-query+compass-param-limit": "Maksimalan broj rezultata za prikaz.",
+	"apihelp-query+compass-param-prop": "Koje informacije o definisanom wikiju treba vratiti.",
+	"apihelp-query+compass-param-state": "Filtriraj prema stanju wikija za \"Napravi wiki\"",
+	"apihelp-query+compass-summary": "Daj listu wikija u farmi za \"Napravi wiki\".",
+	"randomwiki": "Nasumični viki",
+	"randomwiki-header": "Izaberite kategoriju i jezik da biste se odvedeni na nasumični viki koji ispunjava izabrane kriterije.",
+	"compass": "Otkrij wikije",
+	"compass-desc": "Dozvoljava [[Special:Compass|otkrivanje wikija]] na farmi s [[Special:CreateWiki|Napravi wiki]].",
+	"compass-table-category": "Kategorija",
+	"compass-table-description": "Opis",
+	"compass-table-established": "Uspostavljen",
+	"compass-table-language": "Jezik",
+	"compass-table-state": "Stanje",
+	"compass-table-visibility": "Vidljivost",
+	"compass-table-wiki": "Ime wikija"
+}

@@ -1,0 +1,43 @@
+{
+	"@metadata": {
+		"authors": [
+			"Banjo",
+			"Elisardojm",
+			"Iváns",
+			"Toliño"
+		]
+	},
+	"apihelp-query+compass-example": "Amosar tódolos wikis no formulario.",
+	"apihelp-query+compass-param-category": "Filtrar pola categoría dun wiki definida por CreateWiki.",
+	"apihelp-query+compass-param-customurl": "Filtrar por se o wiki ten un enderezo URL personalizado definido por CreateWiki.",
+	"apihelp-query+compass-param-language": "Filtrar polo código de lingua dun wiki definido por CreateWiki.",
+	"apihelp-query+compass-param-limit": "Número máximo de resultados a amosar.",
+	"apihelp-query+compass-param-prop": "Información a devolver sobre un wiki definido.",
+	"apihelp-query+compass-param-state": "Filtrar polo estado dun wiki definido por CreateWiki.",
+	"apihelp-query+compass-param-wikis": "Obter unha lista de wikis específicos.",
+	"apihelp-query+compass-summary": "Obter unha lista de wikis nunha granxa de wikis de CreateWiki.",
+	"randomwiki": "Redirixir a un wiki ao chou",
+	"randomwiki-header": "Escolle máis abaixo unha categoría e mais unha lingua e irás a un wiki ó chou que cumpra os criterios seleccionados.",
+	"randomwiki-parameters": "Selecciona os parámetros",
+	"compass": "Descubrir wikis",
+	"compass-desc": "Permite [[Special:Compass|descubrir wikis]] nunha granxa de wikis con [[Special:CreateWiki|CreateWiki]].",
+	"compass-header": "Escolle os parámetros para a túa busca",
+	"compass-header-info": "Podes buscar wikis nesta granxa seleccionando algúns parámetros como a lingua e outros.",
+	"compass-label-active": "Activo",
+	"compass-label-any": "(calquera)",
+	"compass-label-closed": "Pechado",
+	"compass-label-deleted": "Eliminado",
+	"compass-label-description": "Descrición curta",
+	"compass-label-inactive": "Inactivo",
+	"compass-label-locked": "Bloqueado",
+	"compass-label-open": "Aberto",
+	"compass-label-private": "Privado",
+	"compass-label-public": "Público",
+	"compass-table-category": "Categoría",
+	"compass-table-description": "Descrición",
+	"compass-table-established": "Establecido",
+	"compass-table-language": "Lingua",
+	"compass-table-state": "Estado",
+	"compass-table-visibility": "Visibilidade",
+	"compass-table-wiki": "Nome do wiki"
+}
