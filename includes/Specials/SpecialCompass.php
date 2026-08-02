@@ -10,6 +10,10 @@ use stdClass;
 use WikiOasis\Compass\CompassHtml;
 use WikiOasis\Compass\Services\CompassStore;
 
+/**
+ * The wiki directory. Everything below the mount point is a no-JavaScript
+ * fallback; the Codex app in ext.compass.app replaces it when it loads.
+ */
 class SpecialCompass extends SpecialPage {
 
 	private const SEARCH_MAX_LENGTH = 128;
@@ -31,27 +35,75 @@ class SpecialCompass extends SpecialPage {
 
 		$out = $this->getOutput();
 		$out->addModuleStyles( [ 'ext.compass.styles' ] );
+		$out->addModules( [ 'ext.compass.app' ] );
 
 		$filters = $this->getFilters();
 		$limit = max( 1, (int)$this->getConfig()->get( 'CompassWikisPerPage' ) );
 		$offset = max( 0, $this->getRequest()->getInt( 'offset' ) );
 
-		$html = CompassHtml::message( 'notice',
-			$this->msg( 'compass-header-info' )->parse()
-		);
+		$out->addJsConfigVars( 'wgCompassConfig', [
+			'limit' => $limit,
+			'usePrivateFilter' => $this->usePrivateFilter(),
+			'states' => array_values( array_diff( $this->getStateOptions(), [ '*' ] ) ),
+			'languages' => $this->getLanguageOptions(),
+			'categories' => $this->getCategoryOptions(),
+		] );
 
-		$html .= $this->buildFilterForm( $filters );
-
-		// Pinned wikis are listed on their own, so they are kept out of the
-		// paginated list whenever that section applies to the current view.
 		$pinned = !$this->hasFilters( $filters );
+		$fallback = Html::element( 'p', [ 'class' => 'ext-compass-intro' ],
+			$this->msg( 'compass-header-info' )->text()
+		) . $this->buildFilterForm( $filters );
+
 		if ( $pinned && $offset === 0 ) {
-			$html .= $this->buildHighlights();
+			$fallback .= $this->buildHighlights();
 		}
 
-		$html .= $this->buildResults( $filters, $limit, $offset, $pinned );
+		$fallback .= $this->buildResults( $filters, $limit, $offset, $pinned );
 
-		$out->addHTML( Html::rawElement( 'div', [ 'class' => 'ext-compass' ], $html ) );
+		$out->addHTML(
+			Html::element( 'div', [ 'id' => 'ext-compass-app' ] ) .
+			Html::rawElement( 'div',
+				[ 'class' => 'ext-compass ext-compass-fallback' ], $fallback
+			)
+		);
+	}
+
+	/**
+	 * @return array[] Language codes paired with their name in the user's language
+	 */
+	private function getLanguageOptions(): array {
+		$languages = [];
+		foreach ( $this->store->getAvailableLanguages() as $code ) {
+			$languages[] = [
+				'code' => $code,
+				'name' => $this->languageNameUtils->getLanguageName(
+					$code, $this->getLanguage()->getCode()
+				) ?: $code,
+			];
+		}
+
+		usort( $languages,
+			static fn ( array $a, array $b ): int => strcmp( $a['name'], $b['name'] )
+		);
+
+		return $languages;
+	}
+
+	/**
+	 * @return array[] Category values paired with their configured label
+	 */
+	private function getCategoryOptions(): array {
+		$labels = array_flip( $this->getConfig()->get( 'CreateWikiCategories' ) );
+		$categories = [];
+
+		foreach ( $this->store->getAvailableCategories() as $value ) {
+			$categories[] = [
+				'value' => $value,
+				'label' => (string)( $labels[$value] ?? $value ),
+			];
+		}
+
+		return $categories;
 	}
 
 	private function getFilters(): array {
@@ -77,6 +129,11 @@ class SpecialCompass extends SpecialPage {
 			$visibility = '*';
 		}
 
+		$sort = $request->getText( 'sort', 'name' );
+		if ( !in_array( $sort, [ 'name', 'newest', 'oldest' ], true ) ) {
+			$sort = 'name';
+		}
+
 		return [
 			'search' => mb_substr(
 				trim( $request->getText( 'search' ) ), 0, self::SEARCH_MAX_LENGTH
@@ -85,12 +142,13 @@ class SpecialCompass extends SpecialPage {
 			'category' => $category,
 			'state' => $state,
 			'visibility' => $visibility,
+			'sort' => $sort,
 		];
 	}
 
 	private function hasFilters( array $filters ): bool {
-		foreach ( $filters as $value ) {
-			if ( $value !== '' && $value !== '*' ) {
+		foreach ( $filters as $key => $value ) {
+			if ( $key !== 'sort' && $value !== '' && $value !== '*' ) {
 				return true;
 			}
 		}
@@ -126,6 +184,7 @@ class SpecialCompass extends SpecialPage {
 			CompassHtml::textInput( [
 				'id' => 'compass-search',
 				'name' => 'search',
+				'type' => 'search',
 				'value' => $filters['search'],
 				'maxlength' => self::SEARCH_MAX_LENGTH,
 				'placeholder' => $this->msg( 'compass-filter-search-placeholder' )->text(),
@@ -133,12 +192,8 @@ class SpecialCompass extends SpecialPage {
 		);
 
 		$languages = [ $this->msg( 'compass-label-any' )->text() => '*' ];
-		$languageNames = $this->languageNameUtils->getLanguageNames(
-			$this->getLanguage()->getCode()
-		);
-
-		foreach ( $languageNames as $code => $name ) {
-			$languages["$name ($code)"] = $code;
+		foreach ( $this->getLanguageOptions() as $language ) {
+			$languages[$language['name']] = $language['code'];
 		}
 
 		$fields .= CompassHtml::field( 'compass-language',
@@ -146,8 +201,10 @@ class SpecialCompass extends SpecialPage {
 			CompassHtml::select( 'language', 'compass-language', $languages, $filters['language'] )
 		);
 
-		$categories = [ $this->msg( 'compass-label-any' )->text() => '*' ] +
-			$this->getConfig()->get( 'CreateWikiCategories' );
+		$categories = [ $this->msg( 'compass-label-any' )->text() => '*' ];
+		foreach ( $this->getCategoryOptions() as $category ) {
+			$categories[$category['label']] = $category['value'];
+		}
 
 		$fields .= CompassHtml::field( 'compass-category',
 			$this->msg( 'compass-table-category' )->text(),
@@ -180,6 +237,16 @@ class SpecialCompass extends SpecialPage {
 			);
 		}
 
+		$sorts = [];
+		foreach ( [ 'name', 'newest', 'oldest' ] as $sort ) {
+			$sorts[$this->msg( "compass-sort-$sort" )->text()] = $sort;
+		}
+
+		$fields .= CompassHtml::field( 'compass-sort',
+			$this->msg( 'compass-sort-label' )->text(),
+			CompassHtml::select( 'sort', 'compass-sort', $sorts, $filters['sort'] )
+		);
+
 		$actions = CompassHtml::submitButton( $this->msg( 'search' )->text() );
 		if ( $this->hasFilters( $filters ) ) {
 			$actions .= CompassHtml::linkButton(
@@ -192,10 +259,8 @@ class SpecialCompass extends SpecialPage {
 			'class' => 'ext-compass-filters',
 			'method' => 'get',
 			'action' => $this->getPageTitle()->getLocalURL(),
+			'aria-label' => $this->msg( 'compass-header' )->text(),
 		],
-			Html::element( 'h2', [ 'class' => 'ext-compass-heading' ],
-				$this->msg( 'compass-header' )->text()
-			) .
 			Html::rawElement( 'div', [ 'class' => 'ext-compass-filters__grid' ], $fields ) .
 			Html::rawElement( 'div', [ 'class' => 'ext-compass-filters__actions' ], $actions )
 		);
@@ -204,7 +269,7 @@ class SpecialCompass extends SpecialPage {
 	private function buildHighlights(): string {
 		$cards = '';
 		foreach ( $this->store->getHighlightedWikis() as $row ) {
-			$cards .= $this->buildCard( $row, true );
+			$cards .= $this->buildCard( $row );
 		}
 
 		if ( $cards === '' ) {
@@ -215,8 +280,31 @@ class SpecialCompass extends SpecialPage {
 			Html::element( 'h2', [ 'class' => 'ext-compass-heading' ],
 				$this->msg( 'compass-highlights-heading' )->text()
 			) .
-			Html::rawElement( 'div', [ 'class' => 'ext-compass-grid' ], $cards )
+			Html::rawElement( 'div', [ 'class' => 'ext-compass-cards' ], $cards )
 		);
+	}
+
+	private function buildCard( stdClass $row ): string {
+		$text = Html::element( 'span', [ 'class' => 'cdx-card__text__title' ], $row->wiki_sitename );
+
+		$description = trim( (string)( $row->cpw_description ?? '' ) );
+		if ( $description !== '' ) {
+			$text .= Html::element( 'span',
+				[ 'class' => 'cdx-card__text__description' ], $description
+			);
+		}
+
+		$text .= Html::element( 'span', [ 'class' => 'cdx-card__text__supporting-text' ],
+			$this->getLanguage()->commaList( array_filter( [
+				$this->getCategoryLabel( $row->wiki_category ),
+				$this->getLanguageName( $row->wiki_language ),
+			] ) )
+		);
+
+		return Html::rawElement( 'a', [
+			'class' => 'cdx-card cdx-card--is-link ext-compass-highlight',
+			'href' => $row->wiki_url ?: $this->validator->getValidUrl( $row->wiki_dbname ),
+		], Html::rawElement( 'span', [ 'class' => 'cdx-card__text' ], $text ) );
 	}
 
 	private function buildResults(
@@ -226,10 +314,14 @@ class SpecialCompass extends SpecialPage {
 		bool $excludeHighlighted
 	): string {
 		$total = $this->store->countWikis( $filters, $excludeHighlighted );
+		$heading = Html::element( 'h2', [ 'class' => 'ext-compass-heading' ],
+			$this->msg( 'compass-results-heading' )->text()
+		);
+
 		if ( $total === 0 ) {
 			return Html::rawElement( 'section', [ 'class' => 'ext-compass-results' ],
-				$this->buildResultsHeading() .
-				CompassHtml::message( 'notice', $this->msg( 'compass-results-empty' )->parse() )
+				$heading .
+				CompassHtml::message( 'notice', $this->msg( 'compass-results-empty' )->escaped() )
 			);
 		}
 
@@ -237,28 +329,87 @@ class SpecialCompass extends SpecialPage {
 			$offset = intdiv( $total - 1, $limit ) * $limit;
 		}
 
-		$cards = '';
+		$rows = '';
 		$shown = 0;
 		foreach ( $this->store->getWikis( $filters, $limit, $offset, $excludeHighlighted ) as $row ) {
-			$cards .= $this->buildCard( $row, false );
+			$rows .= $this->buildRow( $row );
 			$shown++;
 		}
 
 		$count = $this->msg( 'compass-results-count' )
 			->numParams( $offset + 1, $offset + $shown, $total )
-			->parse();
+			->escaped();
 
 		return Html::rawElement( 'section', [ 'class' => 'ext-compass-results' ],
-			$this->buildResultsHeading() .
-			Html::rawElement( 'p', [ 'class' => 'ext-compass-results__count' ], $count ) .
-			Html::rawElement( 'div', [ 'class' => 'ext-compass-grid' ], $cards ) .
-			$this->buildPagination( $filters, $limit, $offset, $total )
+			$heading .
+			$this->buildTable( $rows ) .
+			Html::rawElement( 'div', [ 'class' => 'ext-compass-pagination' ],
+				Html::rawElement( 'span', [ 'class' => 'ext-compass-pagination__count' ], $count ) .
+				$this->buildPagination( $filters, $limit, $offset, $total )
+			)
 		);
 	}
 
-	private function buildResultsHeading(): string {
-		return Html::element( 'h2', [ 'class' => 'ext-compass-heading' ],
-			$this->msg( 'compass-results-heading' )->text()
+	private function buildTable( string $rows ): string {
+		$headers = '';
+		$columns = [
+			'compass-table-wiki',
+			'compass-table-language',
+			'compass-table-category',
+			'compass-table-state',
+			'compass-table-established',
+		];
+
+		foreach ( $columns as $column ) {
+			$headers .= Html::element( 'th', [ 'scope' => 'col' ], $this->msg( $column )->text() );
+		}
+
+		return Html::rawElement( 'div', [ 'class' => 'cdx-table' ],
+			Html::rawElement( 'div', [ 'class' => 'cdx-table__table-wrapper' ],
+				Html::rawElement( 'table', [ 'class' => 'cdx-table__table' ],
+					Html::rawElement( 'thead', [], Html::rawElement( 'tr', [], $headers ) ) .
+					Html::rawElement( 'tbody', [], $rows )
+				)
+			)
+		);
+	}
+
+	private function buildRow( stdClass $row ): string {
+		$name = Html::element( 'a', [
+			'class' => 'ext-compass-table__name',
+			'href' => $row->wiki_url ?: $this->validator->getValidUrl( $row->wiki_dbname ),
+		], $row->wiki_sitename );
+
+		$description = trim( (string)( $row->cpw_description ?? '' ) );
+		if ( $description !== '' ) {
+			$name .= Html::element( 'p',
+				[ 'class' => 'ext-compass-table__description' ], $description
+			);
+		}
+
+		$extended = trim( (string)( $row->cpw_extended_description ?? '' ) );
+		if ( $extended !== '' ) {
+			$name .= CompassHtml::accordion(
+				$this->msg( 'compass-card-more' )->text(),
+				Html::element( 'p', [], $extended )
+			);
+		}
+
+		[ $state, $modifier ] = $this->getState( $row );
+		$stateCell = CompassHtml::chip( $this->msg( $state )->text(), $modifier );
+
+		if ( $this->getConfig()->get( 'CreateWikiUsePrivateWikis' ) && (bool)$row->wiki_private ) {
+			$stateCell .= CompassHtml::chip( $this->msg( 'compass-label-private' )->text() );
+		}
+
+		return Html::rawElement( 'tr', [],
+			Html::rawElement( 'th', [ 'scope' => 'row' ], $name ) .
+			Html::element( 'td', [], $this->getLanguageName( $row->wiki_language ) ) .
+			Html::element( 'td', [], $this->getCategoryLabel( $row->wiki_category ) ) .
+			Html::rawElement( 'td', [], $stateCell ) .
+			Html::element( 'td', [],
+				$this->getLanguage()->userDate( $row->wiki_creation, $this->getUser() )
+			)
 		);
 	}
 
@@ -286,17 +437,18 @@ class SpecialCompass extends SpecialPage {
 			);
 		}
 
-		if ( $links === '' ) {
-			return '';
-		}
-
-		return Html::rawElement( 'nav', [ 'class' => 'ext-compass-pagination' ], $links );
+		return $links;
 	}
 
 	private function getPageUrl( array $filters, int $offset ): string {
 		$query = array_filter( $filters,
 			static fn ( string $value ): bool => $value !== '' && $value !== '*'
 		);
+
+		unset( $query['sort'] );
+		if ( ( $filters['sort'] ?? 'name' ) !== 'name' ) {
+			$query['sort'] = $filters['sort'];
+		}
 
 		if ( $offset > 0 ) {
 			$query['offset'] = (string)$offset;
@@ -305,76 +457,15 @@ class SpecialCompass extends SpecialPage {
 		return $this->getPageTitle()->getLocalURL( $query );
 	}
 
-	private function buildCard( stdClass $row, bool $highlighted ): string {
-		$url = $row->wiki_url ?: $this->validator->getValidUrl( $row->wiki_dbname );
-		$useDescriptions = $this->getConfig()->get( 'CompassUseDescriptions' );
-
-		$text = Html::rawElement( 'span', [ 'class' => 'cdx-card__text__title' ],
-			Html::element( 'a', [ 'href' => $url ], $row->wiki_sitename )
-		);
-
-		$description = trim( (string)( $row->cpw_description ?? '' ) );
-		if ( $useDescriptions && $description !== '' ) {
-			$text .= Html::element( 'span',
-				[ 'class' => 'cdx-card__text__description' ], $description
-			);
-		}
-
-		$text .= Html::rawElement( 'span', [ 'class' => 'cdx-card__text__supporting-text' ],
-			$this->buildChips( $row, $highlighted )
-		);
-
-		$card = Html::rawElement( 'span', [ 'class' => 'cdx-card__text' ], $text );
-
-		$extended = trim( (string)( $row->cpw_extended_description ?? '' ) );
-		if ( $useDescriptions && $extended !== '' ) {
-			$card .= CompassHtml::accordion(
-				$this->msg( 'compass-card-more' )->text(),
-				Html::element( 'p', [], $extended )
-			);
-		}
-
-		$classes = [ 'cdx-card', 'ext-compass-card' ];
-		if ( $highlighted ) {
-			$classes[] = 'ext-compass-card--highlighted';
-		}
-
-		return Html::rawElement( 'div', [ 'class' => $classes ], $card );
+	private function getLanguageName( string $code ): string {
+		return $this->languageNameUtils->getLanguageName(
+			$code, $this->getLanguage()->getCode()
+		) ?: $code;
 	}
 
-	private function buildChips( stdClass $row, bool $highlighted ): string {
-		$chips = '';
-		if ( $highlighted ) {
-			$chips .= CompassHtml::chip(
-				$this->msg( 'compass-label-highlighted' )->text(), 'highlighted'
-			);
-		}
-
-		[ $state, $modifier ] = $this->getState( $row );
-		$chips .= CompassHtml::chip( $this->msg( $state )->text(), $modifier );
-
-		$categories = array_flip( $this->getConfig()->get( 'CreateWikiCategories' ) );
-		$chips .= CompassHtml::chip(
-			(string)( $categories[$row->wiki_category] ?? $row->wiki_category )
-		);
-
-		$language = $this->languageNameUtils->getLanguageName(
-			$row->wiki_language, $this->getLanguage()->getCode()
-		);
-
-		$chips .= CompassHtml::chip( $language ?: $row->wiki_language );
-
-		if ( $this->getConfig()->get( 'CreateWikiUsePrivateWikis' ) && (bool)$row->wiki_private ) {
-			$chips .= CompassHtml::chip( $this->msg( 'compass-label-private' )->text() );
-		}
-
-		$established = $this->msg( 'compass-card-established' )
-			->params( $this->getLanguage()->userDate( $row->wiki_creation, $this->getUser() ) )
-			->text();
-
-		return $chips . Html::element( 'span',
-			[ 'class' => 'ext-compass-card__established' ], $established
-		);
+	private function getCategoryLabel( string $value ): string {
+		$labels = array_flip( $this->getConfig()->get( 'CreateWikiCategories' ) );
+		return (string)( $labels[$value] ?? $value );
 	}
 
 	/**

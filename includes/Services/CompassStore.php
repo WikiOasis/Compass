@@ -59,13 +59,48 @@ class CompassStore {
 		bool $excludeHighlighted = false
 	): IResultWrapper {
 		$dbr = $this->databaseUtils->getGlobalReplicaDB();
+		[ $sortField, $sortDirection ] = match ( $filters['sort'] ?? 'name' ) {
+			'newest' => [ 'wiki_creation', SelectQueryBuilder::SORT_DESC ],
+			'oldest' => [ 'wiki_creation', SelectQueryBuilder::SORT_ASC ],
+			default => [ 'wiki_sitename', SelectQueryBuilder::SORT_ASC ],
+		};
+
 		return $this->newListQuery( $dbr, $filters, $excludeHighlighted )
 			->select( self::FIELDS )
-			->orderBy( 'wiki_sitename', SelectQueryBuilder::SORT_ASC )
+			->orderBy( $sortField, $sortDirection )
 			->limit( $limit )
 			->offset( $offset )
 			->caller( __METHOD__ )
 			->fetchResultSet();
+	}
+
+	/**
+	 * The language codes that listed wikis actually use, so that the filter
+	 * only offers languages that can return a result.
+	 *
+	 * @return string[]
+	 */
+	public function getAvailableLanguages(): array {
+		$dbr = $this->databaseUtils->getGlobalReplicaDB();
+		return $this->newListQuery( $dbr, [] )
+			->select( 'wiki_language' )
+			->distinct()
+			->orderBy( 'wiki_language', SelectQueryBuilder::SORT_ASC )
+			->caller( __METHOD__ )
+			->fetchFieldValues();
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getAvailableCategories(): array {
+		$dbr = $this->databaseUtils->getGlobalReplicaDB();
+		return $this->newListQuery( $dbr, [] )
+			->select( 'wiki_category' )
+			->distinct()
+			->orderBy( 'wiki_category', SelectQueryBuilder::SORT_ASC )
+			->caller( __METHOD__ )
+			->fetchFieldValues();
 	}
 
 	public function countWikis( array $filters, bool $excludeHighlighted = false ): int {
@@ -183,6 +218,35 @@ class CompassStore {
 			->set( $set )
 			->caller( __METHOD__ )
 			->execute();
+	}
+
+	public function deleteWiki( string $dbname ): void {
+		$this->databaseUtils->getGlobalPrimaryDB()
+			->newDeleteQueryBuilder()
+			->deleteFrom( self::TABLE )
+			->where( [ 'cpw_dbname' => $dbname ] )
+			->caller( __METHOD__ )
+			->execute();
+	}
+
+	public function renameWiki( string $oldDbName, string $newDbName ): void {
+		$dbw = $this->databaseUtils->getGlobalPrimaryDB();
+		$dbw->startAtomic( __METHOD__ );
+
+		$dbw->newDeleteQueryBuilder()
+			->deleteFrom( self::TABLE )
+			->where( [ 'cpw_dbname' => $newDbName ] )
+			->caller( __METHOD__ )
+			->execute();
+
+		$dbw->newUpdateQueryBuilder()
+			->update( self::TABLE )
+			->set( [ 'cpw_dbname' => $newDbName ] )
+			->where( [ 'cpw_dbname' => $oldDbName ] )
+			->caller( __METHOD__ )
+			->execute();
+
+		$dbw->endAtomic( __METHOD__ );
 	}
 
 	public function addHighlight( string $dbname ): void {

@@ -55,6 +55,13 @@
 				"LanguageNameUtils",
 				"RemoteWikiFactory"
 			]
+		},
+		"compassdirectory": {
+			"class": "WikiOasis\\Compass\\Api\\ApiQueryCompassDirectory",
+			"services": [
+				"CompassStore",
+				"CreateWikiValidator"
+			]
 		}
 	},
 	"MessagesDirs": {
@@ -87,9 +94,76 @@
 			"dependencies": [
 				"codex-styles"
 			]
+		},
+		"ext.compass.app": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexComponents": [
+				"CdxAccordion",
+				"CdxButton",
+				"CdxCard",
+				"CdxField",
+				"CdxInfoChip",
+				"CdxMessage",
+				"CdxProgressBar",
+				"CdxSearchInput",
+				"CdxSelect",
+				"CdxTable"
+			],
+			"packageFiles": [
+				"ext.compass.app/init.js",
+				"ext.compass.app/App.vue",
+				"ext.compass.app/HighlightCard.vue"
+			],
+			"dependencies": [
+				"mediawiki.api",
+				"mediawiki.jqueryMsg",
+				"vue"
+			],
+			"messages": [
+				"comma-separator",
+				"compass-button-reset",
+				"compass-card-more",
+				"compass-error-load",
+				"compass-filter-search",
+				"compass-filter-search-placeholder",
+				"compass-header",
+				"compass-header-info",
+				"compass-highlights-heading",
+				"compass-label-active",
+				"compass-label-any",
+				"compass-label-closed",
+				"compass-label-deleted",
+				"compass-label-inactive",
+				"compass-label-locked",
+				"compass-label-open",
+				"compass-label-private",
+				"compass-label-public",
+				"compass-loading",
+				"compass-pagination-next",
+				"compass-pagination-previous",
+				"compass-results-count",
+				"compass-results-empty",
+				"compass-results-heading",
+				"compass-sort-label",
+				"compass-sort-name",
+				"compass-sort-newest",
+				"compass-sort-oldest",
+				"compass-table-category",
+				"compass-table-established",
+				"compass-table-language",
+				"compass-table-state",
+				"compass-table-visibility",
+				"compass-table-wiki"
+			]
 		}
 	},
 	"Hooks": {
+		"CreateWikiDeletion": {
+			"handler": "CreateWiki"
+		},
+		"CreateWikiRename": {
+			"handler": "CreateWiki"
+		},
 		"GetMagicVariableIDs": {
 			"handler": "Main"
 		},
@@ -110,6 +184,12 @@
 		}
 	},
 	"HookHandlers": {
+		"CreateWiki": {
+			"class": "WikiOasis\\Compass\\HookHandlers\\CreateWiki",
+			"services": [
+				"CompassStore"
+			]
+		},
 		"Installer": {
 			"class": "WikiOasis\\Compass\\HookHandlers\\Installer"
 		},
@@ -130,8 +210,8 @@
 	},
 	"config": {
 		"CompassDefaultVisibility": {
-			"description": "Boolean. Whether wikis that have not yet made a choice are listed on Special:Compass.",
-			"value": true
+			"description": "Boolean. Whether wikis that have not opted in through ManageWiki are listed on Special:Compass.",
+			"value": false
 		},
 		"CompassDescriptionsMaxLength": {
 			"description": "Integer. The maximum length of the short wiki description.",

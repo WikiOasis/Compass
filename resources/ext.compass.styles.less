@@ -1,13 +1,23 @@
 @import 'mediawiki.skin.variables.less';
 
+/* The server-rendered directory is only for clients that cannot run the app. */
+.client-js .ext-compass-fallback {
+	display: none;
+}
+
 .ext-compass {
 	display: flex;
 	flex-direction: column;
-	gap: @spacing-150;
+	gap: @spacing-200;
+}
+
+.ext-compass-intro {
+	margin: 0;
+	color: @color-subtle;
 }
 
 .ext-compass-heading {
-	margin: 0 0 @spacing-75;
+	margin: 0 0 @spacing-100;
 	padding: 0;
 	border: 0;
 	font-size: @font-size-large;
@@ -15,15 +25,11 @@
 }
 
 .ext-compass-filters {
-	padding: @spacing-100;
-	border: 1px solid @border-color-subtle;
-	border-radius: @border-radius-base;
-	background-color: @background-color-interactive-subtle;
-
 	&__grid {
 		display: grid;
-		grid-template-columns: repeat( auto-fit, minmax( 14em, 1fr ) );
+		grid-template-columns: repeat( auto-fit, minmax( 12em, 1fr ) );
 		gap: @spacing-100;
+		align-items: end;
 	}
 
 	&__actions {
@@ -39,59 +45,42 @@
 	}
 }
 
-.ext-compass-grid {
+.ext-compass-cards {
 	display: grid;
 	grid-template-columns: repeat( auto-fill, minmax( 18em, 1fr ) );
 	gap: @spacing-100;
-	align-items: start;
+	align-items: stretch;
 }
 
-.ext-compass-card {
-	display: flex;
-	flex-direction: column;
-	gap: @spacing-50;
-
-	.cdx-card__text {
-		display: flex;
-		flex-direction: column;
-		gap: @spacing-25;
-	}
-
-	.cdx-card__text__supporting-text {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: @spacing-25;
-	}
-
-	.cdx-accordion {
-		margin-top: @spacing-25;
-	}
-
-	&--highlighted {
-		border-color: @border-color-progressive;
-		background-color: @background-color-progressive-subtle;
-	}
-
-	&__established {
-		color: @color-subtle;
-		font-size: @font-size-small;
-	}
+.ext-compass-highlight {
+	height: 100%;
+	border-color: @border-color-progressive;
+	background-color: @background-color-progressive-subtle;
 }
 
-.ext-compass-results {
-	&__count {
-		margin: 0 0 @spacing-75;
+.ext-compass-table {
+	&__name {
+		font-weight: @font-weight-bold;
+	}
+
+	&__description {
+		margin: @spacing-25 0 0;
 		color: @color-subtle;
+		font-weight: @font-weight-normal;
 	}
 }
 
 .ext-compass-pagination {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: flex-end;
+	align-items: center;
 	gap: @spacing-50;
 	margin-top: @spacing-100;
+
+	&__count {
+		margin-right: auto;
+		color: @color-subtle;
+	}
 }
 
 .ext-compass-curate {
@@ -122,12 +111,6 @@
 }
 
 .ext-compass-chip {
-	&--highlighted {
-		border-color: @border-color-progressive;
-		background-color: @background-color-progressive-subtle;
-		color: @color-progressive;
-	}
-
 	&--success {
 		border-color: @border-color-success;
 		background-color: @background-color-success-subtle;
