@@ -65,7 +65,7 @@ class SpecialCompass extends SpecialPage {
 		) . $this->buildCurationNotice( $filters, $offset );
 
 		if ( $pinned && $offset === 0 ) {
-			$fallback .= $this->buildHighlights();
+			$fallback .= $this->buildHighlights( $filters, $offset );
 		}
 
 		$fallback .= $this->buildResults( $filters, $limit, $offset, $pinned );
@@ -378,10 +378,10 @@ class SpecialCompass extends SpecialPage {
 		);
 	}
 
-	private function buildHighlights(): string {
+	private function buildHighlights( array $filters, int $offset ): string {
 		$cards = '';
 		foreach ( $this->store->getHighlightedWikis() as $row ) {
-			$cards .= $this->buildCard( $row );
+			$cards .= $this->buildCard( $row, $filters, $offset );
 		}
 
 		if ( $cards === '' ) {
@@ -396,9 +396,11 @@ class SpecialCompass extends SpecialPage {
 		);
 	}
 
-	private function buildCard( stdClass $row ): string {
-		$text = Html::element( 'span', [ 'class' => 'cdx-card__text__title' ], $row->wiki_sitename );
-		$thumbnail = $this->buildThumbnail( $row );
+	private function buildCard( stdClass $row, array $filters, int $offset ): string {
+		$url = $row->wiki_url ?: $this->validator->getValidUrl( $row->wiki_dbname );
+		$text = Html::rawElement( 'span', [ 'class' => 'cdx-card__text__title' ],
+			Html::element( 'a', [ 'href' => $url ], $row->wiki_sitename )
+		);
 
 		$description = trim( (string)( $row->cpw_description ?? '' ) );
 		if ( $description !== '' ) {
@@ -414,10 +416,28 @@ class SpecialCompass extends SpecialPage {
 			] ) )
 		);
 
-		return Html::rawElement( 'a', [
-			'class' => 'cdx-card cdx-card--is-link ext-compass-highlight',
-			'href' => $row->wiki_url ?: $this->validator->getValidUrl( $row->wiki_dbname ),
-		], $thumbnail . Html::rawElement( 'span', [ 'class' => 'cdx-card__text' ], $text ) );
+		$card = Html::rawElement( 'span',
+			[ 'class' => 'cdx-card ext-compass-highlight__card' ],
+			$this->buildThumbnail( $row ) .
+			Html::rawElement( 'span', [ 'class' => 'cdx-card__text' ], $text )
+		);
+
+		$extended = trim( (string)( $row->cpw_extended_description ?? '' ) );
+		if ( $extended !== '' ) {
+			$card .= Html::rawElement( 'div',
+				[ 'class' => 'ext-compass-highlight__more' ],
+				CompassHtml::accordion(
+					$this->msg( 'compass-card-more' )->text(),
+					Html::element( 'p', [], $extended )
+				)
+			);
+		}
+
+		if ( $this->canCurate() ) {
+			$card .= $this->buildActions( $row, $filters, $offset );
+		}
+
+		return Html::rawElement( 'div', [ 'class' => 'ext-compass-highlight' ], $card );
 	}
 
 	private function buildThumbnail( stdClass $row ): string {

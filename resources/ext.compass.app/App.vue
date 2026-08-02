@@ -198,7 +198,7 @@ const {
 	CdxSelect,
 	CdxTable,
 	CdxThumbnail
-} = require( '@wikimedia/codex' );
+} = require( './codex.js' );
 const icons = require( './icons.json' );
 const HighlightCard = require( './HighlightCard.vue' );
 

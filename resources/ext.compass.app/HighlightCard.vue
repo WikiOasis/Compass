@@ -47,7 +47,7 @@
 
 <script>
 const { defineComponent } = require( 'vue' );
-const { CdxAccordion, CdxButton, CdxCard, CdxIcon } = require( '@wikimedia/codex' );
+const { CdxAccordion, CdxButton, CdxCard, CdxIcon } = require( './codex.js' );
 const icons = require( './icons.json' );
 
 module.exports = exports = defineComponent( {

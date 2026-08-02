@@ -67,19 +67,41 @@
 }
 
 .ext-compass-highlight {
+	display: flex;
+	flex-direction: column;
 	height: 100%;
-	padding: @spacing-150;
-	gap: @spacing-100;
-	border-color: @border-color-progressive;
+	border: 1px solid @border-color-progressive;
+	border-radius: @border-radius-base;
 	background-color: @background-color-progressive-subtle;
+	overflow: hidden;
 
-	.cdx-card__text__title {
-		font-size: @font-size-large;
+	&__card.cdx-card {
+		flex-grow: 1;
+		align-items: flex-start;
+		gap: @spacing-100;
+		padding: @spacing-150;
+		border: 0;
+		border-radius: 0;
+		background-color: transparent;
+
+		.cdx-card__text__title {
+			font-size: @font-size-large;
+		}
+
+		.cdx-card__thumbnail.cdx-thumbnail .cdx-thumbnail__image {
+			width: 5rem;
+			height: 5rem;
+			border-radius: @border-radius-base;
+		}
 	}
 
-	.cdx-card__thumbnail.cdx-thumbnail .cdx-thumbnail__image {
-		width: 5rem;
-		height: 5rem;
+	&__more {
+		padding: 0 @spacing-150;
+	}
+
+	.ext-compass-actions {
+		padding: @spacing-50 @spacing-100;
+		border-top: 1px solid @border-color-subtle;
 	}
 }
 

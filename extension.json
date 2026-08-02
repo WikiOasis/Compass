@@ -129,17 +129,26 @@
 				"CdxThumbnail"
 			],
 			"packageFiles": [
-				"ext.compass.app/init.js",
 				{
-					"name": "ext.compass.app/icons.json",
+					"name": "init.js",
+					"file": "ext.compass.app/init.js"
+				},
+				{
+					"name": "icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
 						"cdxIconPushPin",
 						"cdxIconTrash"
 					]
 				},
-				"ext.compass.app/App.vue",
-				"ext.compass.app/HighlightCard.vue"
+				{
+					"name": "App.vue",
+					"file": "ext.compass.app/App.vue"
+				},
+				{
+					"name": "HighlightCard.vue",
+					"file": "ext.compass.app/HighlightCard.vue"
+				}
 			],
 			"dependencies": [
 				"mediawiki.api",
